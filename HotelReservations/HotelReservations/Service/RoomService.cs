@@ -11,8 +11,8 @@ namespace HotelReservations.Service
     public class RoomService
     {
         IRoomRepository roomRepository;
-        public RoomService() 
-        { 
+        public RoomService()
+        {
             roomRepository = new RoomRepository();
         }
 
@@ -39,19 +39,15 @@ namespace HotelReservations.Service
         {
             if (room.Id == 0)
             {
-                room.Id = GetNextIdValue();
+                room.Id = roomRepository.Insert(room);
                 Hotel.GetInstance().Rooms.Add(room);
             }
             else
             {
+                roomRepository.Update(room);
                 var index = Hotel.GetInstance().Rooms.FindIndex(r => r.Id == room.Id);
                 Hotel.GetInstance().Rooms[index] = room;
             }
-        }
-
-        public int GetNextIdValue()
-        {
-            return Hotel.GetInstance().Rooms.Max(r => r.Id) + 1;
         }
     }
 }

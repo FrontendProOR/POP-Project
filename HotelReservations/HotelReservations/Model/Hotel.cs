@@ -10,7 +10,8 @@ namespace HotelReservations.Model
     {
         public int Id { get; set; }
         private string name;
-        public string Name { 
+        public string Name
+        {
             get { return name; }
             set
             {
@@ -28,14 +29,14 @@ namespace HotelReservations.Model
         public List<Reservation> Reservations { get; set; } = new List<Reservation>();
 
         public List<User> Users { get; set; } = new List<User>();
-        private Hotel() 
-        { 
+        private Hotel()
+        {
         }
 
         private static Hotel instance;
         public static Hotel GetInstance()
         {
-            if(instance == null)
+            if (instance == null)
             {
                 instance = new Hotel();
             }

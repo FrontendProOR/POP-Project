@@ -93,13 +93,24 @@ namespace HotelReservations
             try
             {
                 IRoomRepository roomRepository = new RoomRepository();
-                var loadedRooms = roomRepository.Load();
+                var loadedRooms = roomRepository.GetAll();
 
                 if (loadedRooms != null)
                 {
                     Hotel.GetInstance().Rooms = loadedRooms;
                 }
 
+                //var newRoom = new Room()
+                //{
+                //    RoomNumber = "03",
+                //    HasTV = true,
+                //    HasMiniBar = false,
+                //    IsActive = true,
+                //    RoomType = singleBedRoom
+                //};
+
+                //newRoom.Id = roomRepository.Insert(newRoom);
+                //Hotel.GetInstance().Rooms.Add(newRoom);
 
                 // Samo za primer...
                 //BinaryRoomRepository binaryRoomRepository = new BinaryRoomRepository();
@@ -121,7 +132,7 @@ namespace HotelReservations
             {
                 // Kada se gasi program, čuvamo u rooms.txt
                 // Posle toga će rooms.txt postojati (ako nešto ne pođe po zlu)
-                IRoomRepository roomRepository = new RoomRepository();
+                IRoomRepository roomRepository = new CSVRoomRepository();
                 roomRepository.Save(Hotel.GetInstance().Rooms);
 
 
