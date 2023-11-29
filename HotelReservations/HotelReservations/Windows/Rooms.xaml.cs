@@ -117,5 +117,10 @@ namespace HotelReservations.Windows
 
             }
         }
+
+        private void RoomsDG_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

@@ -18,41 +18,43 @@ namespace HotelReservations
             hotel.Name = "Hotel Park";
             hotel.Address = "Kod Futoskog parka...";
 
-            var singleBedRoom = new RoomType()
-            {
-                Id = 1,
-                Name = "Singe Bed"
-            };
+            /*
+              var singleBedRoom = new RoomType()
+             {
+                 Id = 1,
+                 Name = "Singe Bed"
+             };
 
-            var doubleBedRoom = new RoomType()
-            {
-                Id = 2,
-                Name = "Double Bed"
-            };
+             var doubleBedRoom = new RoomType()
+             {
+                 Id = 2,
+                 Name = "Double Bed"
+             };
 
-            var room1 = new Room()
-            {
-                Id = 1,
-                RoomNumber = "02",
-                HasTV = false,
-                HasMiniBar = true,
-                RoomType = singleBedRoom,
-            };
+             var room1 = new Room()
+             {
+                 Id = 1,
+                 RoomNumber = "02",
+                 HasTV = false,
+                 HasMiniBar = true,
+                 RoomType = singleBedRoom,
+             };
 
-            var room2 = new Room()
-            {
-                Id = 2,
-                RoomNumber = "01",
-                HasTV = true,
-                HasMiniBar = true,
-                RoomType = doubleBedRoom,
-            };
+             var room2 = new Room()
+             {
+                 Id = 2,
+                 RoomNumber = "01",
+                 HasTV = true,
+                 HasMiniBar = true,
+                 RoomType = doubleBedRoom,
+             };
 
-            hotel.RoomTypes.Add(singleBedRoom);
-            hotel.RoomTypes.Add(doubleBedRoom);
+             hotel.RoomTypes.Add(singleBedRoom);
+             hotel.RoomTypes.Add(doubleBedRoom);
 
-            hotel.Rooms.Add(room1);
-            hotel.Rooms.Add(room2);
+             hotel.Rooms.Add(room1);
+             hotel.Rooms.Add(room2);
+             */
 
             Receptionist receptionist1 = new Receptionist()
             {
