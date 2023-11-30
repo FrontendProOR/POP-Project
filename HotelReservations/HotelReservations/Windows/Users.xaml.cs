@@ -1,65 +1,64 @@
 ﻿using HotelReservations.Model;
+using HotelReservations.Model.HotelReservations.Model;
 using HotelReservations.Service;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace HotelReservations.Windows
 {
-    /// <summary>
-    /// Interaction logic for Users.xaml
-    /// </summary>
     public partial class Users : Window
     {
         private UserService userService;
-        private ICollectionView view;
 
         public Users()
         {
             userService = new UserService();
-
             InitializeComponent();
             FillData();
         }
 
-        // TODO: Korisničke lozinke ne bi trebalo prikazati
         private void FillData()
         {
-            var users = userService.GetAllUsers();
-
-            view = CollectionViewSource.GetDefaultView(users);
-
-            UsersDG.ItemsSource = null;
-            UsersDG.ItemsSource = view;
-            UsersDG.IsSynchronizedWithCurrentItem = true;
+            try
+            {
+                List<User> users = userService.GetAllUsers();
+                UsersDG.ItemsSource = users;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading users: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
             var addUsersWindow = new AddEditUser();
+            addUsersWindow.Closed += AddUsersWindow_Closed;
             addUsersWindow.ShowDialog();
+        }
+
+        private void AddUsersWindow_Closed(object sender, EventArgs e)
+        {
+            // Refresh the data after the AddEditUser window is closed
+            FillData();
         }
 
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
-            var selectedUser = view.CurrentItem as User;
+            var selectedUser = UsersDG.SelectedItem as User;
 
             if (selectedUser != null)
             {
                 var editUsersWindow = new AddEditUser(selectedUser);
+                editUsersWindow.Closed += EditUsersWindow_Closed;
                 editUsersWindow.ShowDialog();
             }
+        }
+
+        private void EditUsersWindow_Closed(object sender, EventArgs e)
+        {
+            // Refresh the data after the AddEditUser window is closed
+            FillData();
         }
     }
 }

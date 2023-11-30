@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HotelReservations.Windows"
         mc:Ignorable="d"
-        Title="AddEditUser" Height="450" Width="800">
-    <Grid>
+        Title="AddEditUser" Height="487" Width="855">
+    <Grid Margin="0,0,0,3">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="300"/>
@@ -14,51 +14,61 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="200"/>
+            <RowDefinition Height="0"/>
+            <RowDefinition Height="400"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
-        <StackPanel
-            Grid.Row="1"
-            Grid.Column="1"
-            Orientation="Vertical"
-            >
-            <StackPanel
-                Orientation="Horizontal"
-                >
-                <Label 
-                    Height="30"
-                    Width="150"
-                    Content="User type:"/>
-                <ComboBox 
-                    Name="UserTypeCB"
-                    Height="30" 
-                    Width="150"
-                    VerticalContentAlignment="Center"
-                    />
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="0,50,0,0">
+            <!--
+            <StackPanel Orientation="Horizontal" Height="30">
+                <Label Height="30" Width="150" Content="User type:"/>
+                <ComboBox Name="UserTypeCB" Height="30" Width="150" VerticalContentAlignment="Center"
+              ItemsSource="{Binding UserTypeOptions}" SelectedItem="{Binding UserTypeObject}" />
+            </StackPanel>
+            
+            <ComboBox Name="UserTypeCB" Height="30" Width="150" VerticalContentAlignment="Center"
+          ItemsSource="{Binding UserTypeOptions}" SelectedItem="{Binding UserTypeObject}" />
+            -->
+            <StackPanel Orientation="Horizontal" Height="30">
+                <Label Height="30" Width="150" Content="User type:"/>
+                <ComboBox Name="UserTypeCB" Height="30" Width="150" VerticalContentAlignment="Center">
+                    <ComboBoxItem Content="administrator" />
+                    <ComboBoxItem Content="receptionist" />
+                    <ComboBoxItem Content="guest" />
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Height="20"/>
+            <StackPanel Height="30" Width="300" Orientation="Horizontal">
+                <Label Content="Name:" Width="150" />
+                <TextBox Background="#FFE7E4E4" Height="30" Width="150" VerticalContentAlignment="Center" Text="{Binding Path=Name, ValidatesOnExceptions=True, UpdateSourceTrigger=LostFocus}" />
+            </StackPanel>
+            <StackPanel Height="20"/>
+            <StackPanel Height="30" Orientation="Horizontal">
+                <Label Content="Surname:" Width="150" />
+                <TextBox Background="#FFE7E4E4" Height="30" Width="150" VerticalContentAlignment="Center" Text="{Binding Path=Surname, ValidatesOnExceptions=True, UpdateSourceTrigger=LostFocus}" />
+            </StackPanel>
+            <StackPanel Height="20"/>
+            <StackPanel Height="30" Orientation="Horizontal">
+                <Label Content="Username:" Width="150" />
+                <TextBox Background="#FFE7E4E4" Height="30" Width="150" VerticalContentAlignment="Center" Text="{Binding Path=Username, ValidatesOnExceptions=True, UpdateSourceTrigger=LostFocus}" />
+            </StackPanel>
+            <StackPanel Height="20"/>
+            <StackPanel Height="30" Orientation="Horizontal">
+                <Label Content="JMBG:" Width="150" />
+                <TextBox Background="#FFE7E4E4" Height="30" Width="150" VerticalContentAlignment="Center" Text="{Binding Path=JMBG, ValidatesOnExceptions=True, UpdateSourceTrigger=LostFocus}" />
+            </StackPanel>
+            <StackPanel Height="20"/>
+            <StackPanel Height="30" Orientation="Horizontal">
+                <Label Content="Password:" Width="150" />
+                <PasswordBox x:Name="UserPassword" Height="30" Width="150" VerticalContentAlignment="Center" />
             </StackPanel>
         </StackPanel>
-        <StackPanel
-            Grid.Row="3" Grid.Column="2"
-            Orientation="Horizontal"
-            FlowDirection="RightToLeft"
-            >
-            <Button 
-                Name="SaveBtn"
-                Content="Save"
-                Width="80"
-                Height="30"
-                Margin="5,0,5,0"
-                Click="SaveBtn_Click"
-                />
-            <Button 
-                Name="CancelBtn"
-                Content="Cancel"
-                Width="80"
-                Height="30"
-                />
+
+        <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal" FlowDirection="RightToLeft">
+            <Button Name="SaveBtn" Content="Save" Width="80" Height="30" Margin="5,0,5,0" Click="SaveBtn_Click" />
+            <Button Name="CancelBtn" Content="Cancel" Width="80" Height="30" />
         </StackPanel>
     </Grid>
 </Window>

@@ -10,7 +10,6 @@
         <Label Content="Username: " HorizontalAlignment="Left" Margin="187,138,0,0" VerticalAlignment="Top" Width="93" FontFamily="Arial" Background="#FF2B2A33" Foreground="White"/>
         <TextBox x:Name="UsernameTextBox" HorizontalAlignment="Center" Height="40" Margin="0,133,0,0" TextWrapping="Wrap" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="214" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TextChanged="TextBox_TextChanged"/>
         <Label Content="Password: " HorizontalAlignment="Left" Margin="187,211,0,0" VerticalAlignment="Top" Width="93" FontFamily="Arial" Foreground="White"/>
-        <!-- Remove the Password="{Binding Password,UpdateSourceTrigger=PropertyChanged}" -->
         <PasswordBox x:Name="UserPasswordBox" HorizontalAlignment="Center" Margin="0,211,0,0" VerticalAlignment="Top" Width="214" Height="37" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PasswordChanged="UserPasswordBox_PasswordChanged" />
 
         <Button Content="Login" HorizontalAlignment="Center" Margin="0,281,0,0" VerticalAlignment="Top" Height="38" Width="110" Foreground="White" Background="#FF3B3859" BorderBrush="{x:Null}" FontFamily="Arial" Click="Button_Click"/>

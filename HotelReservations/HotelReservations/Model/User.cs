@@ -6,18 +6,41 @@ using System.Threading.Tasks;
 
 namespace HotelReservations.Model
 {
-    // Popričali smo o 4 različite varijante kako je moguće
-    // implementirati korisnike. Odabrali smo ovu kako biste
-    // probali nasleđivanje u C# i utvrdili polimorfizam. 
-    public class User
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public string JMBG { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
+    using System;
 
-        public string UserType { get { return GetType().Name; } }
+    namespace HotelReservations.Model
+    {
+        public class User
+        {
+            public User()
+            {
+            }
+
+            public User(int id, string name, string surname, string jMBG, string username, string password, UserType userType)
+            {
+                Id = id;
+                Name = name ?? throw new ArgumentNullException(nameof(name));
+                Surname = surname ?? throw new ArgumentNullException(nameof(surname));
+                JMBG = jMBG ?? throw new ArgumentNullException(nameof(jMBG));
+                Username = username ?? throw new ArgumentNullException(nameof(username));
+                Password = password ?? throw new ArgumentNullException(nameof(password));
+                UserType = userType ?? throw new ArgumentNullException(nameof(userType));
+            }
+
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public string Surname { get; set; }
+            public string JMBG { get; set; }
+            public string Username { get; set; }
+            public string Password { get; set; }
+            public UserType UserType { get; set; }
+
+            public override string ToString()
+            {
+                return $"{Name} {Surname} ({Username}) - {UserType}";
+            }
+        }
     }
+
+
 }

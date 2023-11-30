@@ -1,4 +1,6 @@
 ﻿using HotelReservations.Model;
+using HotelReservations.Model.HotelReservations.Model;
+using HotelReservations.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +22,16 @@ namespace HotelReservations.Windows
     /// </summary>
     public partial class AddEditUser : Window
     {
+        private UserViewModel _viewModel;
+        private UserRepository userRepository;
         public AddEditUser(User user = null)
         {
             InitializeComponent();
+            _viewModel = new UserViewModel();
+
+            userRepository = new UserRepository();
+
+            DataContext = _viewModel;
             AdjustWindow(user);
         }
 
@@ -36,7 +45,15 @@ namespace HotelReservations.Windows
             {
                 Title = "Edit user";
 
-                UserTypeCB.SelectedItem = user.GetType().Name;
+                // Set properties of the ViewModel with existing user data
+                _viewModel.Name = user.Name;
+                _viewModel.Surname = user.Surname;
+                _viewModel.Username = user.Username;
+                _viewModel.JMBG = user.JMBG;
+                _viewModel.Password = user.Password;
+                _viewModel.UserType = UserTypeCB.SelectedItem.ToString();//user.UserType
+
+                UserTypeCB.SelectedItem = user.UserType;
                 UserTypeCB.IsEnabled = false;
             }
             else
@@ -45,9 +62,26 @@ namespace HotelReservations.Windows
             }
         }
 
+
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            var selectedUserType = UserTypeCB.SelectedItem as string;
+            // Create a User object with the data from the ViewModel
+            User user = new User
+            {
+                Name = _viewModel.Name,
+                Surname = _viewModel.Surname,
+                Username = _viewModel.Username,
+                JMBG = _viewModel.JMBG,
+                Password = UserPassword.Password,
+                UserType = new UserType { Name = (string)((ComboBoxItem)UserTypeCB.SelectedItem).Content }
+
+            };
+
+            
+            userRepository.Insert(user);
+            this.Close();
         }
+
+
     }
 }

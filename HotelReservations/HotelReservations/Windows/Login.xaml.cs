@@ -74,9 +74,9 @@ namespace HotelReservations.Windows
             string userRole = IdentifyUserRole(username);
             if (AuthenticateUser(username, password) && userRole == "administrator")
             {
-                //MessageBox.Show("Administrator logged in.");  
-                //MainWindow mainWindow = new MainWindow();
-                //this.Close();
+                MessageBox.Show("Administrator logged in.");
+                MainWindow mainWindow = new MainWindow();
+                this.Close();
             }
             else if (AuthenticateUser(username, password) && userRole == "receptionist")
             {

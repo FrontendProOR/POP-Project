@@ -56,37 +56,37 @@ namespace HotelReservations
              hotel.Rooms.Add(room2);
              */
 
-            Receptionist receptionist1 = new Receptionist()
-            {
-                Id = 1,
-                JMBG = "10101990123456",
-                Name = "Petar",
-                Surname = "Perić",
-                Username = "pera",
-                Password = "password",
-            };
-            Receptionist receptionist2 = new Receptionist()
-            {
-                Id = 2,
-                JMBG = "09091999654321",
-                Name = "Marko",
-                Surname = "Marković",
-                Username = "marko",
-                Password = "password",
-            };
-            Administrator administrator1 = new Administrator()
-            {
-                Id = 3,
-                JMBG = "0809000654456",
-                Name = "Marija",
-                Surname = "Marić",
-                Username = "marija",
-                Password = "password",
-            };
+            //Receptionist receptionist1 = new Receptionist()
+            //{
+            //    Id = 1,
+            //    JMBG = "10101990123456",
+            //    Name = "Petar",
+            //    Surname = "Perić",
+            //    Username = "pera",
+            //    Password = "password",
+            //};
+            //Receptionist receptionist2 = new Receptionist()
+            //{
+            //    Id = 2,
+            //    JMBG = "09091999654321",
+            //    Name = "Marko",
+            //    Surname = "Marković",
+            //    Username = "marko",
+            //    Password = "password",
+            //};
+            //Administrator administrator1 = new Administrator()
+            //{
+            //    Id = 3,
+            //    JMBG = "0809000654456",
+            //    Name = "Marija",
+            //    Surname = "Marić",
+            //    Username = "marija",
+            //    Password = "password",
+            //};
 
-            Hotel.GetInstance().Users.Add(administrator1);
-            Hotel.GetInstance().Users.Add(receptionist1);
-            Hotel.GetInstance().Users.Add(receptionist2);
+            //Hotel.GetInstance().Users.Add(administrator1);
+            //Hotel.GetInstance().Users.Add(receptionist1);
+            //Hotel.GetInstance().Users.Add(receptionist2);
 
 
             // Može kada znamo da postoji rooms.txt datoteka
