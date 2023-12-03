@@ -40,5 +40,28 @@ namespace HotelReservations.Service
         {
             userRepository.DeleteById(userId);
         }
+
+        public void SaveUser(User user)
+        {
+            if (user.Id == 0)
+            {
+                user.Id = userRepository.Insert(user);
+                Hotel.GetInstance().Users.Add(user);
+            }
+            else
+            {
+                userRepository.Update(user);
+                var index = Hotel.GetInstance().Users.FindIndex(u => u.Id == user.Id);
+
+                if (index != -1)
+                {
+                    Hotel.GetInstance().Users[index] = user;
+                }
+                else
+                {
+                    Console.WriteLine($"User with ID {user.Id} not found in the collection.");
+                }
+            }
+        }
     }
 }

@@ -21,7 +21,7 @@
         </ToolBar>
         
         <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <Label Content="Users Username:" VerticalContentAlignment="Center"/>
+            <Label Content="Search User by Username:" VerticalContentAlignment="Center"/>
             <TextBox Name="UsernameSearchTB" Height="24" Width="150" Margin="3" VerticalContentAlignment="Center" PreviewKeyUp="UsernameSearchTB_PreviewKeyUp"/>
         </StackPanel>
 

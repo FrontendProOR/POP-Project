@@ -78,7 +78,12 @@ namespace HotelReservations.Repository
             using (SqlConnection conn = new SqlConnection(Config.CONNECTION_STRING))
             {
                 conn.Open();
-
+                //if (IsUsernameTaken(conn, user.Username, user.Id))
+                //{
+                //    // Handle the case where the new username is already taken
+                //    // You can throw an exception, log an error, or take other appropriate actions.
+                //    throw new InvalidOperationException("New username is already taken.");
+                //}
                 var command = conn.CreateCommand();
                 command.CommandText = @"
                     UPDATE dbo.[user] 
@@ -97,6 +102,19 @@ namespace HotelReservations.Repository
                 command.ExecuteNonQuery();
             }
         }
+
+
+
+        //private bool IsUsernameTaken(SqlConnection conn, string username, int userIdToExclude)
+        //{
+        //    var command = conn.CreateCommand();
+        //    command.CommandText = "SELECT COUNT(*) FROM dbo.[user] WHERE username = @username AND user_id <> @user_id";
+        //    command.Parameters.Add(new SqlParameter("@username", username));
+        //    command.Parameters.Add(new SqlParameter("@user_id", userIdToExclude));
+
+        //    int count = (int)command.ExecuteScalar();
+        //    return count > 0;
+        //}
 
         public void Save(List<User> userList)
         {
@@ -171,6 +189,26 @@ namespace HotelReservations.Repository
 
                 // Return null if user with the specified ID is not found
                 return null;
+            }
+        }
+        public bool UserExists(int userId)
+        {
+            using (SqlConnection conn = new SqlConnection(Config.CONNECTION_STRING))
+            {
+                conn.Open();
+
+                var commandText = @"
+            SELECT 1
+            FROM dbo.[user]
+            WHERE user_id = @user_id
+        ";
+
+                var command = new SqlCommand(commandText, conn);
+                command.Parameters.Add(new SqlParameter("@user_id", userId));
+
+                var result = command.ExecuteScalar();
+
+                return result != null && (int)result == 1;
             }
         }
 

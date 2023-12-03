@@ -6,12 +6,26 @@ namespace HotelReservations.Windows
 {
     public class UserViewModel : INotifyPropertyChanged
     {
+        private int _userId;
         private string _name;
         private string _surname;
         private string _username;
         private string _jmbg;
         private string _password;
         private string _userType;
+
+        public int UserId
+        {
+            get { return _userId; }
+            set
+            {
+                if (_userId != value)
+                {
+                    _userId = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public string Name
         {

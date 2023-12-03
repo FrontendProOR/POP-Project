@@ -16,5 +16,6 @@ namespace HotelReservations.Repository
         void Save(List<User> userList) => throw new System.NotImplementedException();
         void DeleteById(int userId);
         User GetUserById(int userId);
+        bool UserExists(int userId);
     }
 }
