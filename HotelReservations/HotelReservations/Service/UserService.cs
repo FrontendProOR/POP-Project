@@ -23,5 +23,22 @@ namespace HotelReservations.Service
         {
             return userRepository.GetAll();
         }
+
+        //public List<User> GetUsersByUsername(string username) //celi username
+        //{
+        //    var users = userRepository.GetAll();
+        //    var filteredUsers = users.Where(u => u.Username.Equals(username)).ToList();
+        //    return filteredUsers;
+        //}
+        public List<User> GetUsersByUsername(string username)
+        {
+            var users = userRepository.GetAll();
+            var filteredUsers = users.Where(u => u.Username.StartsWith(username)).ToList();
+            return filteredUsers;
+        }
+        public void DeleteUser(int userId)
+        {
+            userRepository.DeleteById(userId);
+        }
     }
 }

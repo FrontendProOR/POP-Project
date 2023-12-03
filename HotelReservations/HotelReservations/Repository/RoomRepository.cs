@@ -99,5 +99,35 @@ namespace HotelReservations.Repository
         {
             throw new NotImplementedException();
         }
+
+        public List<RoomType> GetAllRoomTypes()
+        {
+            var roomTypes = new List<RoomType>();
+
+            using (SqlConnection conn = new SqlConnection(Config.CONNECTION_STRING))
+            {
+                conn.Open();
+
+                var commandText = "SELECT * FROM dbo.room_type";
+                SqlCommand command = new SqlCommand(commandText, conn);
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var roomType = new RoomType()
+                        {
+                            Id = (int)reader["room_type_id"],
+                            Name = reader["room_type_name"] as string,
+                            IsActive = (bool)reader["room_type_is_active"]
+                        };
+
+                        roomTypes.Add(roomType);
+                    }
+                }
+            }
+
+            return roomTypes;
+        }
     }
 }

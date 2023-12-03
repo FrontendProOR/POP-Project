@@ -122,5 +122,10 @@ namespace HotelReservations.Windows
         {
 
         }
+
+        private void RoomNumberSearchTB_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

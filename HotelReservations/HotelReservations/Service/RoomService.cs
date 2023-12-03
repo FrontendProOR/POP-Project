@@ -49,5 +49,12 @@ namespace HotelReservations.Service
                 Hotel.GetInstance().Rooms[index] = room;
             }
         }
+        public List<RoomType> GetAllRoomTypes()
+        {
+            // Implement logic to fetch room types from the database
+            // For example, using a repository method.
+            return roomRepository.GetAllRoomTypes();
+        }
+
     }
 }

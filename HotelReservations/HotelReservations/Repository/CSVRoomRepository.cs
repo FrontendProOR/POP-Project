@@ -87,6 +87,19 @@ namespace HotelReservations.Repository
             }
         }
 
+        public List<RoomType> GetAllRoomTypes()
+        {
+            try
+            {
+                return new List<RoomType>(); 
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw new CouldntLoadResourceException(ex.Message);
+            }
+        }
+
         public int Insert(Room room)
         {
             throw new NotImplementedException();

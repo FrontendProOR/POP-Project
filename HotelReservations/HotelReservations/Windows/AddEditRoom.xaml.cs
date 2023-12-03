@@ -55,7 +55,13 @@ namespace HotelReservations.Windows
             }
 
             // OVE PODATKE PREKO SERVISA, PLS
-            var roomTypes = Hotel.GetInstance().RoomTypes;
+            //var roomTypes = Hotel.GetInstance().RoomTypes;
+            //RoomTypesCB.ItemsSource = roomTypes;
+
+            // Retrieve room types from the database using the service
+            var roomTypes = roomService.GetAllRoomTypes();
+
+            // Set the retrieved room types as the ItemsSource for the ComboBox
             RoomTypesCB.ItemsSource = roomTypes;
         }
 

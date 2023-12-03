@@ -9,16 +9,23 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <ToolBar Grid.Row="0">
             <Button Name="AddBtn" Content="Add" BorderBrush="LightGray" Click="AddBtn_Click"/>
             <Button Name="EditBtn" Content="Edit" BorderBrush="LightGray" Margin="5,0,0,0" Click="EditBtn_Click"/>
-            <Button Name="DeleteBtn" Content="Delete" BorderBrush="LightGray" Margin="5,0,0,0"/>
-        </ToolBar>
+            <Button Name="DeleteBtn" Content="Delete" BorderBrush="LightGray" Margin="5,0,0,0" Click="DeleteBtn_Click"/>
 
-        <DataGrid Name="UsersDG" Grid.Row="1" 
+        </ToolBar>
+        
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Label Content="Users Username:" VerticalContentAlignment="Center"/>
+            <TextBox Name="UsernameSearchTB" Height="24" Width="150" Margin="3" VerticalContentAlignment="Center" PreviewKeyUp="UsernameSearchTB_PreviewKeyUp"/>
+        </StackPanel>
+
+        <DataGrid Name="UsersDG" Grid.Row="2" 
                   IsReadOnly="True"/>
 
     </Grid>

@@ -22,6 +22,7 @@ namespace HotelReservations.Windows
     /// </summary>
     public partial class AddEditUser : Window
     {
+
         private UserViewModel _viewModel;
         private UserRepository userRepository;
         public AddEditUser(User user = null)
@@ -51,10 +52,21 @@ namespace HotelReservations.Windows
                 _viewModel.Username = user.Username;
                 _viewModel.JMBG = user.JMBG;
                 _viewModel.Password = user.Password;
-                _viewModel.UserType = UserTypeCB.SelectedItem.ToString();//user.UserType
+                //_viewModel.UserType = UserTypeCB.SelectedItem.ToString();//user.UserType
+                if (UserTypeCB != null && UserTypeCB.Items.Count > 0)
+                {
+                    // Set selected item based on user.UserType
+                    //UserTypeCB.SelectedItem = user.UserType?.Name;
+                    UserTypeCB.SelectedItem = UserTypeCB.Items.OfType<ComboBoxItem>().FirstOrDefault(item => item.Content.ToString() == user.UserType?.Name);
 
-                UserTypeCB.SelectedItem = user.UserType;
-                UserTypeCB.IsEnabled = false;
+                    // Check if selected item is not null before accessing it
+                    if (UserTypeCB.SelectedItem != null)
+                    {
+                        _viewModel.UserType = UserTypeCB.SelectedItem.ToString();
+                    }
+
+                    UserTypeCB.IsEnabled = true;//ako postavljas edit da ne menja role 
+                }
             }
             else
             {
@@ -73,15 +85,28 @@ namespace HotelReservations.Windows
                 Username = _viewModel.Username,
                 JMBG = _viewModel.JMBG,
                 Password = UserPassword.Password,
-                UserType = new UserType { Name = (string)((ComboBoxItem)UserTypeCB.SelectedItem).Content }
+                //UserType = new UserType { Name = (string)((ComboBoxItem)UserTypeCB.SelectedItem).Content }
+                UserType = new UserType { Name = UserTypeCB.SelectedItem.ToString() }
 
             };
 
-            
-            userRepository.Insert(user);
+            User existingUser = userRepository.GetUserById(user.Id);
+
+            if (existingUser == null)
+            {
+                userRepository.Insert(user);
+                this.Close();
+            }
+            else
+            {
+                userRepository.Update(user);
+                this.Close();
+            }
+        }
+        private void CancelBtn_Click(object sender,RoutedEventArgs e)
+        {
             this.Close();
         }
-
 
     }
 }

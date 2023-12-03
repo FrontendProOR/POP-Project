@@ -114,5 +114,65 @@ namespace HotelReservations.Repository
                 }
             }
         }
+
+        public void DeleteById(int userId)
+        {
+            using (SqlConnection conn = new SqlConnection(Config.CONNECTION_STRING))
+            {
+                conn.Open();
+
+                var command = conn.CreateCommand();
+                command.CommandText = @"
+                DELETE FROM dbo.[user] WHERE user_id = @user_id
+            ";
+
+                command.Parameters.Add(new SqlParameter("@user_id", userId));
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public User GetUserById(int userId)
+        {
+            using (SqlConnection conn = new SqlConnection(Config.CONNECTION_STRING))
+            {
+                conn.Open();
+
+                var commandText = @"
+            SELECT u.*, ut.* FROM dbo.[user] u
+            INNER JOIN dbo.user_type ut ON u.user_type = ut.user_type_name
+            WHERE u.user_id = @user_id
+        ";
+
+                var command = new SqlCommand(commandText, conn);
+                command.Parameters.Add(new SqlParameter("@user_id", userId));
+
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return new User
+                        {
+                            Id = (int)reader["user_id"],
+                            Name = (string)reader["first_name"],
+                            Surname = (string)reader["last_name"],
+                            JMBG = (string)reader["JMBG"],
+                            Username = (string)reader["username"],
+                            Password = (string)reader["password"],
+                            UserType = new UserType
+                            {
+                                Id = (int)reader["user_type_id"],
+                                Name = (string)reader["user_type_name"],
+                                IsActive = (bool)reader["user_type_is_active"]
+                            }
+                        };
+                    }
+                }
+
+                // Return null if user with the specified ID is not found
+                return null;
+            }
+        }
+
     }
 }

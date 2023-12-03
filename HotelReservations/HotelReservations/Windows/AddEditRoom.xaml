@@ -75,12 +75,9 @@
                     Height="30"
                     Width="150"
                     Content="Room type:"/>
-                <ComboBox 
-                    Name="RoomTypesCB"
-                    Height="30" 
-                    Width="150"
-                    VerticalContentAlignment="Center"
-                    SelectedItem="{Binding RoomType}"/>
+                <ComboBox Name="RoomTypesCB" Height="30" Width="150" VerticalContentAlignment="Center" SelectedItem="{Binding RoomType}"/>
+                <!--<ComboBox Name="RoomTypesCB" Height="30" Width="150" VerticalContentAlignment="Center" SelectedItem="{Binding RoomType, Mode=TwoWay}" ItemsSource="{Binding RoomTypes, Mode=OneWay}" DisplayMemberPath="Name" SelectedValuePath="Id"/>-->
+
             </StackPanel>
         </StackPanel>
         <StackPanel
