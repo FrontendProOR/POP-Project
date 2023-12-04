@@ -30,6 +30,10 @@
                     Name="RoomTypesMI"
                     Header="RoomTypes"
                     Click="RoomTypesMI_Click"/>
+                <MenuItem 
+                    Name="PricesMI" 
+                    Header="Prices" 
+                    Click="PricesMI_Click"/>
             </MenuItem>
         </Menu>
 

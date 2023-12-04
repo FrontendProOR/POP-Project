@@ -18,7 +18,7 @@ namespace HotelReservations
             hotel.Name = "Hotel Park";
             hotel.Address = "Kod Futoskog parka...";
 
-            /*
+            
               var singleBedRoom = new RoomType()
              {
                  Id = 1,
@@ -54,7 +54,7 @@ namespace HotelReservations
 
              hotel.Rooms.Add(room1);
              hotel.Rooms.Add(room2);
-             */
+             
 
             //Receptionist receptionist1 = new Receptionist()
             //{
@@ -89,9 +89,7 @@ namespace HotelReservations
             //Hotel.GetInstance().Users.Add(receptionist2);
 
 
-            // Može kada znamo da postoji rooms.txt datoteka
-            // Ona bi trebalo da se nađe u potfolderu projektnog foldera
-            // PopProjekat/bin/Debug
+            
             try
             {
                 IRoomRepository roomRepository = new RoomRepository();
@@ -102,17 +100,17 @@ namespace HotelReservations
                     Hotel.GetInstance().Rooms = loadedRooms;
                 }
 
-                //var newRoom = new Room()
-                //{
-                //    RoomNumber = "03",
-                //    HasTV = true,
-                //    HasMiniBar = false,
-                //    IsActive = true,
-                //    RoomType = singleBedRoom
-                //};
+                var newRoom = new Room()
+                {
+                    RoomNumber = "03",
+                    HasTV = true,
+                    HasMiniBar = false,
+                    IsActive = true,
+                    RoomType = singleBedRoom
+                };
 
-                //newRoom.Id = roomRepository.Insert(newRoom);
-                //Hotel.GetInstance().Rooms.Add(newRoom);
+                newRoom.Id = roomRepository.Insert(newRoom);
+                Hotel.GetInstance().Rooms.Add(newRoom);
 
                 // Samo za primer...
                 //BinaryRoomRepository binaryRoomRepository = new BinaryRoomRepository();

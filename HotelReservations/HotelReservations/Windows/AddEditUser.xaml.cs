@@ -1,6 +1,7 @@
 ﻿using HotelReservations.Model;
 using HotelReservations.Repository;
 using HotelReservations.Service;
+using HotelReservations.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,8 +44,8 @@ namespace HotelReservations.Windows
         private void AdjustWindow(User user = null)
         {
             // TODO: Inicijalizovati combobox za selekciju tipa korisnika
-            UserTypeCB.Items.Add(typeof(Receptionist).Name);
-            UserTypeCB.Items.Add(typeof(Administrator).Name);
+            //UserTypeCB.Items.Add(typeof(Receptionist).Name);
+            //UserTypeCB.Items.Add(typeof(Administrator).Name);
 
             if (user != null)
             {
