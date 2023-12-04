@@ -17,6 +17,7 @@
             <Button Name="AddBtn" Content="Add" BorderBrush="LightGray" Click="AddBtn_Click"/>
             <Button Name="EditBtn" Content="Edit" BorderBrush="LightGray" Margin="5,0,0,0"  Click="EditBtn_Click" />
             <Button Name="DeleteBtn" Content="Delete" BorderBrush="LightGray" Margin="5,0,0,0" Click="DeleteBtn_Click"/>
+            <Button Name="PermanentDeleteBtn" Content="Permanent Delete" BorderBrush="LightGray" Margin="5,0,0,0" Click="PermanentDeleteBtn_Click"/>
         </ToolBar>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal">
@@ -24,8 +25,11 @@
             <TextBox Name="RoomNumberSearchTB" Height="24" Width="150" Margin="3" VerticalContentAlignment="Center" PreviewKeyUp="RoomNumberSearchTB_PreviewKeyUp"/>
         </StackPanel>
 
-        <DataGrid Name="RoomsDG" Grid.Row="2" 
-                  IsReadOnly="True" AutoGeneratingColumn="RoomsDG_AutoGeneratingColumn"/>
+        <!--<DataGrid Name="RoomsDG" Grid.Row="2" IsReadOnly="True" AutoGeneratingColumn="RoomsDG_AutoGeneratingColumn"/>-->
+        <DataGrid Name="RoomsDG" Grid.Row="2" IsReadOnly="True"
+          AutoGeneratingColumn="RoomsDG_AutoGeneratingColumn"
+          SelectedValuePath="Id" SelectionMode="Single" 
+          SelectedValue="{Binding SelectedRoomId, Mode=TwoWay}"/>
 
 
     </Grid>

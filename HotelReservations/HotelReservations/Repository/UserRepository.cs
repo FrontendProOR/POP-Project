@@ -1,5 +1,4 @@
 ﻿using HotelReservations.Model;
-using HotelReservations.Model.HotelReservations.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -39,7 +38,9 @@ namespace HotelReservations.Repository
                             Id = (int)row["user_type_id"],
                             Name = (string)row["user_type_name"],
                             IsActive = (bool)row["user_type_is_active"]
-                        }
+                        },
+                        IsDeleted = (bool)row["is_deleted"]
+
                     };
 
                     users.Add(user);
@@ -133,7 +134,8 @@ namespace HotelReservations.Repository
             }
         }
 
-        public void DeleteById(int userId)
+        //normal delete
+        public void PermanentDeleteUser(int userId)
         {
             using (SqlConnection conn = new SqlConnection(Config.CONNECTION_STRING))
             {
@@ -149,6 +151,23 @@ namespace HotelReservations.Repository
                 command.ExecuteNonQuery();
             }
         }
+
+        //Logical delete
+        public void DeleteById(int userId)
+        {
+            using (SqlConnection conn = new SqlConnection(Config.CONNECTION_STRING))
+            {
+                conn.Open();
+
+                var command = conn.CreateCommand();
+                command.CommandText = @"UPDATE dbo.[user] SET is_deleted = 1 WHERE user_id = @user_id";
+
+                command.Parameters.Add(new SqlParameter("@user_id", userId));
+
+                command.ExecuteNonQuery();
+            }
+        }
+
 
         public User GetUserById(int userId)
         {

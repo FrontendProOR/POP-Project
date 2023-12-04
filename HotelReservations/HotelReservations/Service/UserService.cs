@@ -1,6 +1,5 @@
 ﻿
 using HotelReservations.Model;
-using HotelReservations.Model.HotelReservations.Model;
 using HotelReservations.Repository;
 using System;
 using System.Collections.Generic;
@@ -39,6 +38,15 @@ namespace HotelReservations.Service
         public void DeleteUser(int userId)
         {
             userRepository.DeleteById(userId);
+        }
+
+        public void PermanentDeleteUser(int userId)
+        {
+            // Create an instance of UserRepository
+            UserRepository userRepositoryInstance = new UserRepository();
+
+            // Call the instance method on the instance
+            userRepositoryInstance.PermanentDeleteUser(userId);
         }
 
         public void SaveUser(User user)

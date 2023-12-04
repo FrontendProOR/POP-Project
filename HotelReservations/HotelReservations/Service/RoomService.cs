@@ -10,7 +10,7 @@ namespace HotelReservations.Service
 {
     public class RoomService
     {
-        IRoomRepository roomRepository;
+        private IRoomRepository roomRepository;
         public RoomService()
         {
             roomRepository = new RoomRepository();
@@ -18,7 +18,7 @@ namespace HotelReservations.Service
 
         public List<Room> GetAllRooms()
         {
-            return Hotel.GetInstance().Rooms;
+            return roomRepository.GetAll();
         }
 
         public List<Room> GetSortedRooms()
@@ -55,6 +55,30 @@ namespace HotelReservations.Service
             // For example, using a repository method.
             return roomRepository.GetAllRoomTypes();
         }
+        public void PermanentDeleteRoom(int roomId)
+        {
+            // Implement logic for permanently deleting a room
+            // For example, remove it from the repository and the in-memory list
+            //var roomToRemove = Hotel.GetInstance().Rooms.Find(r => r.Id == roomId);
+            //if (roomToRemove != null)
+            //{
+                //Hotel.GetInstance().Rooms.Remove(roomToRemove);
+                RoomRepository roomRepository = new RoomRepository();
+                roomRepository.PermanentDeleteRoom(roomId);
+                
+            //}
+        }
 
+        public void DeleteRoom(int roomId)
+        {
+            // Implement logic for logically deleting a room
+            // For example, update the room status to inactive
+            //var roomToDelete = Hotel.GetInstance().Rooms.Find(r => r.Id == roomId);
+            //if (roomToDelete != null)
+            //{
+                //roomToDelete.IsActive = false; // Assuming IsActive is a property in your Room class
+                roomRepository.Delete(roomId);
+            //}
+        }
     }
 }

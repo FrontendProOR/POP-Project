@@ -1,5 +1,4 @@
 ﻿using HotelReservations.Model;
-using HotelReservations.Model.HotelReservations.Model;
 using HotelReservations.Repository;
 using HotelReservations.Service;
 using System;

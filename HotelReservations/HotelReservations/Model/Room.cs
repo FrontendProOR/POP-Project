@@ -1,53 +1,60 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HotelReservations.Model;
 
-namespace HotelReservations.Model
+[Serializable]
+public class Room
 {
-    [Serializable]
-    public class Room
+    public Room(int id, string roomNumber, bool hasTV, bool hasMiniBar, RoomType roomType, bool isActive, bool isDeleted)
     {
-        public int Id { get; set; }
+        Id = id;
+        RoomNumber = roomNumber;
+        HasTV = hasTV;
+        HasMiniBar = hasMiniBar;
+        RoomType = roomType;
+        IsActive = isActive;
+        IsDeleted = isDeleted;
+    }
 
-        private string roomNumber = string.Empty;
-        public string RoomNumber
+    public Room()
+    {
+    }
+
+    public int Id { get; set; }
+    public string roomNumber = string.Empty;
+    public bool HasTV { get; set; }
+    public bool HasMiniBar { get; set; }
+    public RoomType RoomType { get; set; }
+    public bool IsActive { get; set; }
+    public bool IsDeleted { get; set; }
+
+    public string RoomNumber
+    {
+        get { return roomNumber; }
+        set
         {
-            get { return roomNumber; }
-            set
+            if (string.IsNullOrEmpty(value))
             {
-                //if (value == null || value == "")
-                if (string.IsNullOrEmpty(value))
-                {
-                    throw new ArgumentException("It's required");
-                }
-
-                roomNumber = value;
+                throw new ArgumentException("It's required");
             }
-        }
-        public bool HasTV { get; set; }
-        public bool HasMiniBar { get; set; }
-        public RoomType RoomType { get; set; }
-        public bool IsActive { get; set; }
 
-        public override string ToString()
-        {
-            //return "Room number: " + RoomNumber; // ...
-            return $"Room number: {RoomNumber}";
+            roomNumber = value;
         }
+    }
 
-        public Room Clone()
-        {
-            var clone = new Room();
-            clone.Id = Id;
-            clone.RoomNumber = RoomNumber;
-            clone.HasTV = HasTV;
-            clone.HasMiniBar = HasMiniBar;
-            clone.RoomType = RoomType;
-            clone.IsActive = IsActive;
+    public override string ToString()
+    {
+        return $"Room number: {RoomNumber}";
+    }
 
-            return clone;
-        }
+    public Room Clone()
+    {
+        var clone = new Room();
+        clone.Id = Id;
+        clone.RoomNumber = RoomNumber;
+        clone.HasTV = HasTV;
+        clone.HasMiniBar = HasMiniBar;
+        clone.IsActive = IsActive;
+        clone.RoomType = RoomType;
+        clone.IsDeleted = IsDeleted;
+        return clone;
     }
 }

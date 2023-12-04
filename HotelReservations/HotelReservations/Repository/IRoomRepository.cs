@@ -14,6 +14,7 @@ namespace HotelReservations.Repository
         int Insert(Room room);
         void Update(Room room);
         void Save(List<Room> roomList);
-        
+        void PermanentDeleteRoom(int id); 
+        void Delete(int id);
     }
 }

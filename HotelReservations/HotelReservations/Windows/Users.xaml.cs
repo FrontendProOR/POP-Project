@@ -1,5 +1,4 @@
 ﻿using HotelReservations.Model;
-using HotelReservations.Model.HotelReservations.Model;
 using HotelReservations.Service;
 using System;
 using System.Collections.Generic;
@@ -70,7 +69,24 @@ namespace HotelReservations.Windows
                 }
             }
         }
+        private void PermanentDeleteBtn_Click(object sender,RoutedEventArgs e)
+        {
+            var selectedUser = UsersDG.SelectedItem as User;
 
+            if (selectedUser == null)
+            {
+                MessageBox.Show("Please select a user to delete.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (MessageBox.Show($"Are you sure that you want to delete user {selectedUser.Username}?",
+                "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                userService.PermanentDeleteUser(selectedUser.Id);
+
+                FillData();
+            }
+        }
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
             var selectedUser = UsersDG.SelectedItem as User;

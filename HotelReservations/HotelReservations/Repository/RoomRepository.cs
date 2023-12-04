@@ -32,6 +32,7 @@ namespace HotelReservations.Repository
                         HasTV = (bool)row["has_TV"],
                         HasMiniBar = (bool)row["has_mini_bar"],
                         IsActive = (bool)row["room_is_active"],
+                        IsDeleted = (bool)row["is_deleted"],
                         RoomType = new RoomType()
                         {
                             Id = (int)row["room_type_id"],
@@ -55,7 +56,7 @@ namespace HotelReservations.Repository
 
                 var command = conn.CreateCommand();
                 command.CommandText = @"
-                    INSERT INTO dbo.room (room_number, has_TV, has_mini_bar, room_is_active, room_type_id)
+                    INSERT INTO dbo.[room] (room_number, has_TV, has_mini_bar, room_is_active, room_type_id)
                     OUTPUT inserted.room_id
                     VALUES (@room_number, @has_TV, @has_mini_bar, @room_is_active, @room_type_id)
                 ";
@@ -65,7 +66,7 @@ namespace HotelReservations.Repository
                 command.Parameters.Add(new SqlParameter("has_mini_bar", room.HasMiniBar));
                 command.Parameters.Add(new SqlParameter("room_is_active", room.IsActive));
                 command.Parameters.Add(new SqlParameter("room_type_id", room.RoomType.Id));
-
+                command.Parameters.Add(new SqlParameter("is_deleted",false));
 
                 return (int)command.ExecuteScalar();
             }
@@ -79,7 +80,7 @@ namespace HotelReservations.Repository
 
                 var command = conn.CreateCommand();
                 command.CommandText = @"
-                    UPDATE dbo.room 
+                    UPDATE dbo.[room] 
                     SET room_number=@room_number, has_TV=@has_TV, has_mini_bar=@has_mini_bar, room_is_active=@room_is_active, room_type_id=@room_type_id
                     WHERE room_id=@room_id
                 ";
@@ -90,6 +91,7 @@ namespace HotelReservations.Repository
                 command.Parameters.Add(new SqlParameter("has_mini_bar", room.HasMiniBar));
                 command.Parameters.Add(new SqlParameter("room_is_active", room.IsActive));
                 command.Parameters.Add(new SqlParameter("room_type_id", room.RoomType.Id));
+                command.Parameters.Add(new SqlParameter("is_deleted", false));
 
                 command.ExecuteNonQuery();
             }
@@ -99,7 +101,42 @@ namespace HotelReservations.Repository
         {
             throw new NotImplementedException();
         }
+        public void Delete(int id)
+        {
+            using (SqlConnection conn = new SqlConnection(Config.CONNECTION_STRING))
+            {
+                conn.Open();
 
+                var command = conn.CreateCommand();
+                command.CommandText = @"
+            UPDATE dbo.[room] 
+            SET is_deleted = 1
+            WHERE room_id = @room_id
+        ";
+
+                command.Parameters.Add(new SqlParameter("room_id", id));
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void PermanentDeleteRoom(int id)
+        {
+            using (SqlConnection conn = new SqlConnection(Config.CONNECTION_STRING))
+            {
+                conn.Open();
+
+                var command = conn.CreateCommand();
+                command.CommandText = @"
+            DELETE FROM dbo.[room] 
+            WHERE room_id = @room_id
+        ";
+
+                command.Parameters.Add(new SqlParameter("room_id", id));
+
+                command.ExecuteNonQuery();
+            }
+        }
         public List<RoomType> GetAllRoomTypes()
         {
             var roomTypes = new List<RoomType>();

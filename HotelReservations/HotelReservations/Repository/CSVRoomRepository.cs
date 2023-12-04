@@ -109,5 +109,14 @@ namespace HotelReservations.Repository
         {
             throw new NotImplementedException();
         }
+        public void PermanentDeleteRoom(int id)
+        {
+            throw new NotImplementedException("Permanent deletion is not supported in CSVRoomRepository.");
+        }
+
+        public void Delete(int id)
+        {
+            throw new NotImplementedException("Logical deletion is not supported in CSVRoomRepository.");
+        }
     }
 }

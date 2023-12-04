@@ -23,8 +23,10 @@ namespace HotelReservations.Windows
     public partial class Rooms : Window
     {
         private ICollectionView view;
+        private RoomService roomService;
         public Rooms()
         {
+            roomService = new RoomService();
             InitializeComponent();
             FillData();
         }
@@ -33,10 +35,10 @@ namespace HotelReservations.Windows
         {
             var roomService = new RoomService();
             var rooms = roomService.GetAllRooms();
-
+            
             view = CollectionViewSource.GetDefaultView(rooms);
             view.Filter = DoFilter;
-
+            
             RoomsDG.ItemsSource = null;
             RoomsDG.ItemsSource = view;
             RoomsDG.IsSynchronizedWithCurrentItem = true;
@@ -58,10 +60,10 @@ namespace HotelReservations.Windows
 
         private void RoomsDG_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
-            if (e.PropertyName.ToLower() == "IsActive".ToLower())
-            {
-                e.Column.Visibility = Visibility.Collapsed;
-            }
+            //if (e.PropertyName.ToLower() == "IsActive".ToLower())
+            //{
+            //    e.Column.Visibility = Visibility.Collapsed;
+            //}
         }
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
@@ -99,25 +101,52 @@ namespace HotelReservations.Windows
         {
             view.Refresh();
         }
-
-        // TODO: Završi započeto
-        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        private void PermanentDeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (view.CurrentItem == null) { return; }
-
-            var selectedRoom = view.CurrentItem as Room;
-
-            if (MessageBox.Show($"Are you sure that you want to delete room {selectedRoom!.RoomNumber}?",
-                "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            var selectedRoom = RoomsDG.SelectedItem as Room;
+            if (selectedRoom == null)
             {
-
+                MessageBox.Show("Please select a room to delete.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
-            else
-            {
 
-            }
+                if (MessageBox.Show($"Are you sure that you want to permanently delete room {SelectedRoomId}?",
+                    "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    roomService.PermanentDeleteRoom(SelectedRoomId);
+                    FillData();
+                }
+            
         }
 
+        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedRoom = RoomsDG.SelectedItem as Room;
+            if (selectedRoom == null)
+            {
+                MessageBox.Show("Please select a room to delete.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (MessageBox.Show($"Are you sure that you want to delete room {SelectedRoomId}?",
+                    "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    roomService.DeleteRoom(SelectedRoomId);
+                    FillData();
+                }
+            
+        }
+        
+        private int SelectedRoomId
+        {
+            get
+            {
+                if (RoomsDG.SelectedValue != null)
+                {
+                    return (int)RoomsDG.SelectedValue;
+                }
+                return 0; // or any default value
+            }
+        }
         private void RoomsDG_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 

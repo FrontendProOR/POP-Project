@@ -1,5 +1,4 @@
 ﻿using HotelReservations.Model;
-using HotelReservations.Model.HotelReservations.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +14,7 @@ namespace HotelReservations.Repository
         void Update(User user) => throw new System.NotImplementedException();
         void Save(List<User> userList) => throw new System.NotImplementedException();
         void DeleteById(int userId);
+        void PermanentDeleteUser(int userId);
         User GetUserById(int userId);
         bool UserExists(int userId);
     }
