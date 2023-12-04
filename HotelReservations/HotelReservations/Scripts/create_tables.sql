@@ -65,6 +65,19 @@ CREATE TABLE reservation (
 	total_price FLOAT NOT NULL,
 	reservation_is_active BIT NOT NULL,
 );
+CREATE TABLE guest (
+	guest_id INT IDENTITY(1,1) PRIMARY KEY,
+	guest_name VARCHAR(40) NOT NULL,
+	guest_surname VARCHAR(50) NOT NULL,
+	guest_id_number VARCHAR(25) NOT NULL,
+	guest_is_active BIT NOT NULL
+);
+CREATE TABLE reservation_guest (
+    reservation_id INT,
+    guest_id INT,
+    FOREIGN KEY (reservation_id) REFERENCES reservation(reservation_id),
+    FOREIGN KEY (guest_id) REFERENCES guest(guest_id)
+);
 
 SELECT * FROM dbo."user" u
 WHERE u."user_type" = 'administrator'

@@ -1,4 +1,5 @@
-﻿using HotelReservations.Windows;
+﻿using HotelReservations.Model;
+using HotelReservations.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +52,16 @@ namespace HotelReservations
         {
             var userTypesWindow = new UserTypes();
             userTypesWindow.Show();
+        }
+        private void ReservationsMI_Click(object sender, RoutedEventArgs e)
+        {
+            var reservationsWindow = new Reservations();
+            reservationsWindow.Show();
+        }
+        private void GuestsMI_Click(object sender, RoutedEventArgs e)
+        {
+            var guestsWindow = new Guests();
+            guestsWindow.Show();
         }
     }
 }

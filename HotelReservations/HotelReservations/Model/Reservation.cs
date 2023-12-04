@@ -10,6 +10,7 @@ namespace HotelReservations.Model
     {
         public int Id { get; set; }
         public ReservationType ReservationType { get; set; }
+
         //public List<Guest> Guests { get; set; }
         public DateTime StartDateTime { get; set; }
         public DateTime EndDateTime { get; set; }

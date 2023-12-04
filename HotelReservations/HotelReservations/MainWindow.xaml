@@ -38,6 +38,16 @@
                     Name="UserTypesMI"
                     Header="User Types"
                     Click="UserTypesMI_Click"/>
+                <MenuItem 
+                Name="ReservationsMI" 
+                Header="Reservations"
+                Click="ReservationsMI_Click"
+                />
+                <MenuItem 
+                Name="GuestsMI" 
+                Header="Guests"
+                Click="GuestsMI_Click"
+                />
             </MenuItem>
         </Menu>
 
