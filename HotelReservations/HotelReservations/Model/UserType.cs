@@ -11,14 +11,12 @@ namespace HotelReservations.Model
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
         public override string ToString()
         {
             return Name;
         }
 
-        // rt1.Equals(null)
-        // rt1.Equals(hootel)
         public override bool Equals(object? obj)
         {
             if (obj == null) return false;
@@ -32,6 +30,15 @@ namespace HotelReservations.Model
         public static implicit operator UserType(string v)
         {
             throw new NotImplementedException();
+        }
+
+        public UserType Clone()
+        {   
+            var clone = new UserType();
+            clone.Id = Id;
+            clone.Name = Name;
+            clone.IsActive = IsActive;
+            return clone;
         }
     }
 }

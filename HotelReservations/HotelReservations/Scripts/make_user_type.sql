@@ -1,6 +1,14 @@
-﻿CREATE TABLE dbo.user_type
-(
-    user_type_id INT PRIMARY KEY,
-    user_type_name VARCHAR(50) NOT NULL,
-    user_type_is_active BIT NOT NULL
-);
+﻿
+UPDATE dbo.user_type
+SET user_type_name = 'administrator'
+WHERE user_type_id = 1;
+
+-- Update Receptionist
+UPDATE dbo.user_type
+SET user_type_name = 'receptionist'
+WHERE user_type_id = 2;
+
+-- Update Guest
+UPDATE dbo.user_type
+SET user_type_name = 'guest'
+WHERE user_type_id = 3;

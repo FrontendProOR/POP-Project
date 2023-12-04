@@ -34,6 +34,10 @@
                     Name="PricesMI" 
                     Header="Prices" 
                     Click="PricesMI_Click"/>
+                <MenuItem 
+                    Name="UserTypesMI"
+                    Header="User Types"
+                    Click="UserTypesMI_Click"/>
             </MenuItem>
         </Menu>
 
