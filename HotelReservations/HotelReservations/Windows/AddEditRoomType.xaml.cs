@@ -17,65 +17,58 @@ using System.Windows.Shapes;
 namespace HotelReservations.Windows
 {
     /// <summary>
-    /// Interaction logic for AddEditRoom.xaml
+    /// Interaction logic for AddEditRoomType.xaml
     /// </summary>
-    public partial class AddEditRoom : Window
+    public partial class AddEditRoomType : Window
     {
-        private RoomService roomService;
 
-        private Room contextRoom;
-        public AddEditRoom(Room? room = null)
+        private RoomTypeService roomTypeService;
+
+        private RoomType contextRoomType;
+
+        public AddEditRoomType(RoomType? roomType = null)
         {
-            if (room == null)
+            if (roomType == null)
             {
-                contextRoom = new Room();
+                contextRoomType = new RoomType();
             }
             else
             {
-                contextRoom = room.Clone();
+                contextRoomType = roomType.Clone();
             }
-
             InitializeComponent();
-            roomService = new RoomService();
 
-            AdjustWindow(room);
+            roomTypeService = new RoomTypeService();
 
-            this.DataContext = contextRoom;
+            AdjustWindow(roomType);
+
+            this.DataContext = contextRoomType;
         }
 
-        public void AdjustWindow(Room? room = null)
+        
+
+        public void AdjustWindow(RoomType? roomType = null)
         {
-            if (room != null)
+            if (roomType != null)
             {
-                Title = "Edit Room";
+                Title = "Edit Room Type";
             }
             else
             {
-                Title = "Add Room";
+                Title = "Add Room Type";
             }
-
-            // OVE PODATKE PREKO SERVISA, PLS
-            //var roomTypes = Hotel.GetInstance().RoomTypes;
-            //RoomTypesCB.ItemsSource = roomTypes;
-
-            // Retrieve room types from the database using the service
-            var roomTypes = roomService.GetAllRoomTypes();
-
-            // Set the retrieved room types as the ItemsSource for the ComboBox
-            RoomTypesCB.ItemsSource = roomTypes;
         }
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
 
-            if (string.IsNullOrEmpty(contextRoom.RoomNumber))
+            if (string.IsNullOrEmpty(contextRoomType.Name))
             {
                 MessageBox.Show("Fill required fields.", "Validation Failed", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            
 
-            roomService.SaveRoom(contextRoom);
+            roomTypeService.SaveRoomType(contextRoomType);
 
             DialogResult = true;
             Close();

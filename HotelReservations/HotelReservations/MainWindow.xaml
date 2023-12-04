@@ -26,6 +26,10 @@
                     Header="Users"
                     Click="UsersMI_Click"
                     />
+                <MenuItem
+                    Name="RoomTypesMI"
+                    Header="RoomTypes"
+                    Click="RoomTypesMI_Click"/>
             </MenuItem>
         </Menu>
 

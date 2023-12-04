@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,7 +12,7 @@ namespace HotelReservations.Model
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
         public override string ToString()
         {
             return Name;
@@ -27,6 +28,16 @@ namespace HotelReservations.Model
             if (other == null) return false;
 
             return Id == other.Id;
+        }
+
+        public RoomType Clone()
+        {
+            var clone = new RoomType();
+            clone.Id = Id;
+            clone.Name = Name;
+            clone.IsActive = IsActive;
+
+            return clone;
         }
     }
 }
