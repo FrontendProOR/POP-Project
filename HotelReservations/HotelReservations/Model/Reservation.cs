@@ -15,6 +15,7 @@ namespace HotelReservations.Model
         public DateTime StartDateTime { get; set; }
         public DateTime EndDateTime { get; set; }
         public double TotalPrice { get; set; }
+        public string RoomNumber { get; set; }
         public bool IsActive { get; set; } = true;
         public Reservation Clone()
         {
@@ -24,6 +25,7 @@ namespace HotelReservations.Model
             reservation.StartDateTime = StartDateTime;
             reservation.EndDateTime = EndDateTime;
             reservation.TotalPrice = TotalPrice;
+            reservation.RoomNumber = RoomNumber;
             reservation.IsActive = IsActive;
             return reservation;
         }

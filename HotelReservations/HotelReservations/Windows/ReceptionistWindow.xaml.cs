@@ -23,5 +23,19 @@ namespace HotelReservations.Windows
         {
             InitializeComponent();
         }
+        private void OpenReservationsWindow(object sender, RoutedEventArgs e)
+        {
+            // Create and show the Reservations window
+            var reservationsWindow = new Reservations();
+            reservationsWindow.Show();
+        }
+
+        private void OpenGuestsWindow(object sender, RoutedEventArgs e)
+        {
+            // Create and show the Guests window
+            var guestsWindow = new Guests(); // Replace with the actual name of your Guests window class
+            guestsWindow.Show();
+        }
+
     }
 }

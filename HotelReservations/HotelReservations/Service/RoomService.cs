@@ -28,12 +28,52 @@ namespace HotelReservations.Service
             return rooms;
         }
 
+        public List<Room> GetRoomsByRoomType(string roomTypeName)
+        {
+            var rooms = Hotel.GetInstance().Rooms;
+            var filteredRooms = rooms.FindAll((r) => r.RoomType.Name.ToLower().Contains(roomTypeName.ToLower()));
+            return filteredRooms;
+        }
+
+        public List<Room> GetRoomsByIsActive(bool isActive)
+        {
+            var rooms = Hotel.GetInstance().Rooms;
+            var filteredRooms = rooms.FindAll((r) => r.IsActive == isActive);
+            return filteredRooms;
+        }
+
         public List<Room> GetAllRoomsByRoomNumber(string startingWith)
         {
             var rooms = Hotel.GetInstance().Rooms;
             var filteredRooms = rooms.FindAll((r) => r.RoomNumber.StartsWith(startingWith));
             return filteredRooms;
         }
+
+        //public List<Room> GetFilteredRooms(string roomNumber, string roomTypeName, bool isActive)
+        //{
+        //    var rooms = Hotel.GetInstance().Rooms;
+
+        //    var filteredRooms = rooms.Where(r =>
+        //        (string.IsNullOrEmpty(roomNumber) || r.RoomNumber.StartsWith(roomNumber)) &&
+        //        (string.IsNullOrEmpty(roomTypeName) || r.RoomType.Name.ToLower().Contains(roomTypeName.ToLower())) &&
+        //        (!isActive || r.IsActive)&&(r.IsDeleted != true)
+        //    ).ToList();
+
+        //    return filteredRooms;
+        //}
+        public List<Room> GetFilteredRooms(string roomNumber, string roomTypeName, bool isActive)
+        {
+            var rooms = Hotel.GetInstance().Rooms;
+
+            var filteredRooms = rooms.AsParallel().Where(r =>
+                (string.IsNullOrEmpty(roomNumber) || r.RoomNumber.StartsWith(roomNumber)) &&
+                (string.IsNullOrEmpty(roomTypeName) || r.RoomType.Name.ToLower().Contains(roomTypeName.ToLower())) &&
+                (!isActive || r.IsActive) && (r.IsDeleted != true)
+            ).ToList();
+
+            return filteredRooms;
+        }
+
 
         public void SaveRoom(Room room)
         {

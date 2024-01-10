@@ -135,11 +135,28 @@ namespace HotelReservations.Windows
             }
         }
 
+        //private bool DoFilter(object userObject)
+        //{
+        //    var user = userObject as User;
+        //    // Implement your filtering logic if needed
+        //    return true;
+        //}
+
         private bool DoFilter(object userObject)
         {
             var user = userObject as User;
-            // Implement your filtering logic if needed
-            return true;
+
+            if (user != null && !user.IsDeleted)
+            {
+                var usernameSearchParam = UsernameSearchTB.Text;
+
+                if (user.Username.Contains(usernameSearchParam))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

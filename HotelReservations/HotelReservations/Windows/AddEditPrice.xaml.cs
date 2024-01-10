@@ -1,4 +1,5 @@
 ﻿using HotelReservations.Model;
+using HotelReservations.Repository;
 using HotelReservations.Service;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace HotelReservations.Windows
     public partial class AddEditPrice : Window
     {
         private PriceService priceService;
-
+        private RoomService roomService;
         private Price contextPrice;
         public AddEditPrice(Price? price = null)
         {
@@ -40,6 +41,7 @@ namespace HotelReservations.Windows
 
             InitializeComponent();
             priceService = new PriceService();
+            roomService = new RoomService();
 
             AdjustWindow(price);
 
@@ -57,7 +59,14 @@ namespace HotelReservations.Windows
                 Title = "Add Price";
             }
 
+            if(roomService != null)
+            {
+            Hotel.GetInstance().RoomTypes = roomService.GetAllRoomTypes();
+            }
             var roomTypes = Hotel.GetInstance().RoomTypes;
+            
+
+
             RoomTypesCB.ItemsSource = roomTypes;
 
             ReservationTypesCB.ItemsSource = Enum.GetValues(typeof(ReservationType));

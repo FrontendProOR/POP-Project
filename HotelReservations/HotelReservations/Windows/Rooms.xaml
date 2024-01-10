@@ -20,9 +20,17 @@
             <Button Name="PermanentDeleteBtn" Content="Permanent Delete" BorderBrush="LightGray" Margin="5,0,0,0" Click="PermanentDeleteBtn_Click"/>
         </ToolBar>
 
+        <!--<StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Label Content="Room number:" VerticalContentAlignment="Center"/>
+            <TextBox Name="RoomNumberSearchTB" Height="24" Width="150" Margin="3" VerticalContentAlignment="Center" PreviewKeyUp="RoomNumberSearchTB_PreviewKeyUp"/>
+        </StackPanel>
+-->
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <Label Content="Room number:" VerticalContentAlignment="Center"/>
             <TextBox Name="RoomNumberSearchTB" Height="24" Width="150" Margin="3" VerticalContentAlignment="Center" PreviewKeyUp="RoomNumberSearchTB_PreviewKeyUp"/>
+            <Label Content="Room type:" VerticalContentAlignment="Center" Margin="10,0,0,0"/>
+            <ComboBox Name="RoomTypeSearchCB" Width="150" Margin="3" SelectionChanged="RoomTypeSearchCB_SelectionChanged"/>
+            <CheckBox Name="IsActiveCheckBox" Content="Active" VerticalAlignment="Center" Margin="10,0,0,0" Checked="IsActiveCheckBox_Checked" Unchecked="IsActiveCheckBox_Unchecked"/>
         </StackPanel>
 
         <!--<DataGrid Name="RoomsDG" Grid.Row="2" IsReadOnly="True" AutoGeneratingColumn="RoomsDG_AutoGeneratingColumn"/>-->

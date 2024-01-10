@@ -29,6 +29,7 @@ namespace HotelReservations.Repository
                     {
                         Id = (int)row["room_id"],
                         RoomNumber = row["room_number"] as string,
+                        
                         HasTV = (bool)row["has_TV"],
                         HasMiniBar = (bool)row["has_mini_bar"],
                         IsActive = (bool)row["room_is_active"],
@@ -37,6 +38,7 @@ namespace HotelReservations.Repository
                         {
                             Id = (int)row["room_type_id"],
                             Name = (string)row["room_type_name"],
+                            NumberOfBeds = (int)row["number_of_beds"],
                             IsActive = (bool)row["room_type_is_active"]
                         }
                     };
@@ -152,14 +154,18 @@ namespace HotelReservations.Repository
                 {
                     while (reader.Read())
                     {
+                        if ((bool)reader["room_type_is_active"])
+                        {
+
                         var roomType = new RoomType()
                         {
                             Id = (int)reader["room_type_id"],
                             Name = reader["room_type_name"] as string,
-                            IsActive = (bool)reader["room_type_is_active"]
+                            IsActive = (bool)reader["room_type_is_active"] 
                         };
 
                         roomTypes.Add(roomType);
+                        }
                     }
                 }
             }

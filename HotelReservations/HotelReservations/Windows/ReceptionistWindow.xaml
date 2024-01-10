@@ -7,6 +7,13 @@
         mc:Ignorable="d"
         Title="ReceptionistWindow" Height="450" Width="800">
     <Grid>
-        
+        <!-- Menu -->
+        <Menu>
+            <MenuItem Header="Reservations" Click="OpenReservationsWindow"/>
+            <MenuItem Header="Guests" Click="OpenGuestsWindow"/>
+            <!-- Add more menu items as needed -->
+        </Menu>
+
+        <!-- You can include other UI elements for the ReceptionistWindow below the menu -->
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotelReservations.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,11 +16,11 @@ using System.Windows.Shapes;
 namespace HotelReservations.Windows
 {
     /// <summary>
-    /// Interaction logic for GuestWindow.xaml
+    /// Interaction logic for GuestInformationWindow.xaml
     /// </summary>
-    public partial class GuestWindow : Window
+    public partial class GuestInformationWindow : Window
     {
-        public GuestWindow()
+        public GuestInformationWindow(Guest guest)
         {
             InitializeComponent();
         }

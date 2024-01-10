@@ -12,6 +12,7 @@ namespace HotelReservations.Model
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int NumberOfBeds {  get; set; }
         public bool IsActive { get; set; } = true;
         public override string ToString()
         {
@@ -35,6 +36,7 @@ namespace HotelReservations.Model
             var clone = new RoomType();
             clone.Id = Id;
             clone.Name = Name;
+            clone.NumberOfBeds = NumberOfBeds;
             clone.IsActive = IsActive;
 
             return clone;

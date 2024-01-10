@@ -53,17 +53,26 @@ namespace HotelReservations.Windows
 
         public void FillData()
         {
-            var reservationService = new ReservationService();
-            var rGuest = reservationService.GetAllRGuests();
+            //var reservationService = new ReservationGuestService();
+            //var rGuest = reservationService.GetAllReservationGuests();
 
-            view = CollectionViewSource.GetDefaultView(rGuest);
-            view.Filter = DoFilter;
+            //view = CollectionViewSource.GetDefaultView(rGuest);
+            ////view.Filter = DoFilter;
 
+            //ReservationGuestsDG.ItemsSource = null;
+            //ReservationGuestsDG.ItemsSource = view;
+            //ReservationGuestsDG.IsSynchronizedWithCurrentItem = true;
+            var roomService = new RoomService();
+            var rooms = roomService.GetAllRooms().Where(r => !r.IsDeleted).ToList();
 
-            ReservationGuestsDG.ItemsSource = null;
-            ReservationGuestsDG.ItemsSource = view;
-            ReservationGuestsDG.IsSynchronizedWithCurrentItem = true;
+            view = CollectionViewSource.GetDefaultView(rooms);
+            view.Filter = DoRoomFilter;
+
+            AvailableRoomsDG.ItemsSource = null;
+            AvailableRoomsDG.ItemsSource = view;
+            AvailableRoomsDG.IsSynchronizedWithCurrentItem = true;
         }
+
 
         private bool DoFilter(object guestObject)
         {
@@ -76,6 +85,18 @@ namespace HotelReservations.Windows
 
             return false;
         }
+        private bool DoRoomFilter(object roomObject)
+        {
+            var room = roomObject as Room;
+
+            if (room != null && !room.IsDeleted)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
 
         private void ReservationGuestsDG_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
@@ -99,15 +120,46 @@ namespace HotelReservations.Windows
             ReservationTypesCB.ItemsSource = Enum.GetValues(typeof(ReservationType));
         }
 
+        //private void SaveBtn_Click(object sender, RoutedEventArgs e)
+        //{
+
+        //    if (contextReservation.TotalPrice == 0)
+        //    {
+        //        MessageBox.Show("Fill required fields.", "Validation Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+        //        return;
+        //    }
+
+        //    reservationService.SaveReservation(contextReservation);
+
+        //    contextReservationGuest.ReservationId = contextReservation;
+        //    contextReservationGuest.GuestId = contextGuest;
+        //    reservationGuestService.SaveReservationGuest(contextReservationGuest);
+
+        //    DialogResult = true;
+        //    Close();
+        //}
+
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-
             if (contextReservation.TotalPrice == 0)
             {
                 MessageBox.Show("Fill required fields.", "Validation Failed", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
+            // Retrieve selected room number from the AvailableRoomsDG DataGrid
+            var selectedRoom = (Room)AvailableRoomsDG.SelectedItem;
+
+            if (selectedRoom == null)
+            {
+                MessageBox.Show("Please select a room.", "Validation Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // Assign the selected room number to the contextReservation object
+            contextReservation.RoomNumber = selectedRoom.RoomNumber;
+
+            // Save reservation and associated data
             reservationService.SaveReservation(contextReservation);
 
             contextReservationGuest.ReservationId = contextReservation;
@@ -118,6 +170,16 @@ namespace HotelReservations.Windows
             Close();
         }
 
+
+        private void AvailableRoomsDG_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Handle the selection changed event here if needed
+        }
+
+        private void AvailableRoomsDG_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            // Handle the auto-generating column event here if needed
+        }
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
@@ -129,12 +191,16 @@ namespace HotelReservations.Windows
             ReservationGuests rg = new ReservationGuests();
             if (rg.ShowDialog() == true)
             {
-                Hotel.GetInstance().RGuests.Add(rg.selectedGuest);
                 contextGuest = rg.selectedGuest;
+                Hotel.GetInstance().RGuests.Add(rg.selectedGuest);
 
             }
             FillData();
         }
 
+        private void ReservationGuestsDG_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

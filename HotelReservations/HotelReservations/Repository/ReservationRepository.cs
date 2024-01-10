@@ -33,6 +33,7 @@ namespace HotelReservations.Repository
                         StartDateTime = (DateTime)row["start_date_time"],
                         EndDateTime = (DateTime)row["end_date_time"],
                         TotalPrice = (double)row["total_price"],
+                        RoomNumber = row["room_number"] as string,
                         IsActive = (bool)row["reservation_is_active"],
                     };
 
@@ -51,22 +52,22 @@ namespace HotelReservations.Repository
 
                 var command = conn.CreateCommand();
                 command.CommandText = @"
-                    INSERT INTO dbo.[reservation] (reservation_type, start_date_time, end_date_time, total_price, reservation_is_active)
-                    OUTPUT inserted.reservation_id
-                    VALUES (@reservation_type, @start_date_time, @end_date_time, @total_price, @reservation_is_active)
-                "
-                ;
+            INSERT INTO dbo.[reservation] (reservation_type, start_date_time, end_date_time, total_price, room_number, reservation_is_active)
+            OUTPUT inserted.reservation_id
+            VALUES (@reservation_type, @start_date_time, @end_date_time, @total_price, @room_number, @reservation_is_active)
+        ";
 
                 command.Parameters.Add(new SqlParameter("reservation_type", Convert.ToInt32(reservation.ReservationType)));
                 command.Parameters.Add(new SqlParameter("start_date_time", reservation.StartDateTime));
                 command.Parameters.Add(new SqlParameter("end_date_time", reservation.EndDateTime));
                 command.Parameters.Add(new SqlParameter("total_price", reservation.TotalPrice));
+                command.Parameters.Add(new SqlParameter("room_number", reservation.RoomNumber)); // Include room_number parameter
                 command.Parameters.Add(new SqlParameter("reservation_is_active", reservation.IsActive));
-
 
                 return (int)command.ExecuteScalar();
             }
         }
+
 
         public void Update(Reservation reservation)
         {
@@ -77,7 +78,7 @@ namespace HotelReservations.Repository
                 var command = conn.CreateCommand();
                 command.CommandText = @"
                     UPDATE dbo.[reservation] 
-                    SET reservation_type=@reservation_type, start_date_time=@start_date_time, end_date_time=@end_date_time, total_price=@total_price, reservation_is_active=@reservation_is_active 
+                    SET reservation_type=@reservation_type, start_date_time=@start_date_time, end_date_time=@end_date_time, total_price=@total_price,room_number=@room_number, reservation_is_active=@reservation_is_active 
                     WHERE reservation_id=@reservation_id
                 "
                 ;
@@ -87,6 +88,7 @@ namespace HotelReservations.Repository
                 command.Parameters.Add(new SqlParameter("start_date_time", reservation.StartDateTime));
                 command.Parameters.Add(new SqlParameter("end_date_time", reservation.EndDateTime));
                 command.Parameters.Add(new SqlParameter("total_price", reservation.TotalPrice));
+                command.Parameters.Add(new SqlParameter("room_number", reservation.RoomNumber));
                 command.Parameters.Add(new SqlParameter("reservation_is_active", reservation.IsActive));
 
                 command.ExecuteNonQuery();

@@ -36,13 +36,13 @@ namespace HotelReservations.Service
             if (price.Id == 0)
             {
                 price.Id = priceRepository.Insert(price);
-                Hotel.GetInstance().PriceList.Add(price);
+                //Hotel.GetInstance().PriceList.Add(price);
             }
             else
             {
                 priceRepository.Update(price);
-                var index = Hotel.GetInstance().PriceList.FindIndex(r => r.Id == price.Id);
-                Hotel.GetInstance().PriceList[index] = price;
+                //var index = Hotel.GetInstance().PriceList.FindIndex(r => r.Id == price.Id);
+                //Hotel.GetInstance().PriceList[index] = price;
             }
         }
 

@@ -29,7 +29,8 @@ namespace HotelReservations.Repository
                     {
                         Id = (int)row["room_type_id"],
                         Name = (string)row["room_type_name"],
-                        IsActive = (bool)row["room_type_is_active"],
+                        NumberOfBeds = (int)row["number_of_beds"],
+                        IsActive = (bool)row["room_type_is_active"]
                     };
 
                     roomTypes.Add(roomType);
@@ -47,13 +48,14 @@ namespace HotelReservations.Repository
 
                 var command = conn.CreateCommand();
                 command.CommandText = @"
-                    INSERT INTO dbo.[room_type] (room_type_name, room_type_is_active)
+                    INSERT INTO dbo.[room_type] (room_type_name, number_of_beds, room_type_is_active)
                     OUTPUT inserted.room_type_id
-                    VALUES (@room_type_name, @room_type_is_active)
+                    VALUES (@room_type_name,@number_of_beds, @room_type_is_active)
                 "
                 ;
 
                 command.Parameters.Add(new SqlParameter("room_type_name", roomType.Name));
+                command.Parameters.Add(new SqlParameter("number_of_beds", roomType.NumberOfBeds));
                 command.Parameters.Add(new SqlParameter("room_type_is_active", roomType.IsActive));
 
 
@@ -70,12 +72,13 @@ namespace HotelReservations.Repository
                 var command = conn.CreateCommand();
                 command.CommandText = @"
                     UPDATE dbo.[room_type] 
-                    SET room_type_name=@room_type_name, room_type_is_active=@room_type_is_active
+                    SET room_type_name=@room_type_name,number_of_beds = @number_of_beds, room_type_is_active=@room_type_is_active
                     WHERE room_type_id=@room_type_id
                 ";
 
                 command.Parameters.Add(new SqlParameter("room_type_id", roomType.Id));
                 command.Parameters.Add(new SqlParameter("room_type_name", roomType.Name));
+                command.Parameters.Add(new SqlParameter("number_of_beds", roomType.NumberOfBeds));
                 command.Parameters.Add(new SqlParameter("room_type_is_active", roomType.IsActive));
 
                 command.ExecuteNonQuery();

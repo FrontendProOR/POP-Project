@@ -22,7 +22,7 @@ namespace HotelReservations.Repository
                 DataSet dataSet = new DataSet();
                 adapter.Fill(dataSet, "reservation_guest");
 
-                foreach (DataRow row in dataSet.Tables["reservation_guest"]!.Rows)
+                foreach (DataRow row in dataSet.Tables["reservation_guest"].Rows)
                 {
                     var reservationGuest = new ReservationGuest()
                     {
@@ -37,6 +37,11 @@ namespace HotelReservations.Repository
                         ReservationId = new Reservation()
                         {
                             Id = (int)row["reservation_id"],
+                            //ReservationType = (ReservationType)row["reservation_type"],
+                            //StartDateTime = (DateTime)row["start_date_time"],
+                            //EndDateTime = (DateTime)row["end_date_time"],
+                            //TotalPrice = (double)row["total_price"],
+                            //IsActive = (bool)row["reservation_is_active"],
                         }
                     };
 
@@ -46,6 +51,30 @@ namespace HotelReservations.Repository
 
             return reservationGuests;
         }
+
+        //        public List<(int ReservationId, int GuestId)> GetAll()
+        //{
+        //    var reservationGuests = new List<(int ReservationId, int GuestId)>();
+        //    using (SqlConnection conn = new SqlConnection(Config.CONNECTION_STRING))
+        //    {
+        //        var commandText = "SELECT rg.reservation_id, g.guest_id FROM dbo.[reservation_guest] rg\r\nINNER JOIN dbo.reservation r ON rg.reservation_id = r.reservation_id\r\nINNER JOIN dbo.guest g ON rg.guest_id = g.guest_id";
+        //        SqlDataAdapter adapter = new SqlDataAdapter(commandText, conn);
+
+        //        DataSet dataSet = new DataSet();
+        //        adapter.Fill(dataSet, "reservation_guest");
+
+        //        foreach (DataRow row in dataSet.Tables["reservation_guest"].Rows)
+        //        {
+        //            var reservationId = (int)row["reservation_id"];
+        //            var guestId = (int)row["guest_id"];
+
+        //            reservationGuests.Add((reservationId, guestId));
+        //        }
+        //    }
+
+        //    return reservationGuests;
+        //}
+
 
         public int Insert(ReservationGuest reservationGuest)
         {

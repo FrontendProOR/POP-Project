@@ -85,17 +85,17 @@ namespace HotelReservations.Windows
                 receptionistWindow.Show();
                 this.Close();
             }
-            else if (AuthenticateUser(username, password) && userRole == "guest")
-            {
-                //MessageBox.Show("Guest logged in.");  
-                GuestWindow guestWindow = new GuestWindow();
-                guestWindow.Show();
-                this.Close();
-            }
             else
             {
                 MessageBox.Show("Invalid username or password. Please try again.");
             }
+            //else if (AuthenticateUser(username, password) && userRole == "guest")
+            //{
+            //    //MessageBox.Show("Guest logged in.");  
+            //    GuestWindow guestWindow = new GuestWindow();
+            //    guestWindow.Show();
+            //    this.Close();
+            //}
         }
 
         private string IdentifyUserRole(string username)

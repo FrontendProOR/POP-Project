@@ -18,14 +18,15 @@ namespace HotelReservations.Service
 
         public List<ReservationGuest> GetAllReservationGuests()
         {
-            return Hotel.GetInstance().ReservationGuests;
+            //return Hotel.GetInstance().ReservationGuests;
+            return reservationGuestRepository.GetAll();
         }
 
         public void SaveReservationGuest(ReservationGuest reservationGuest)
         {
 
             reservationGuestRepository.Insert(reservationGuest);
-            Hotel.GetInstance().ReservationGuests.Add(reservationGuest);
+            //Hotel.GetInstance().ReservationGuests.Add(reservationGuest);
 
         }
     }

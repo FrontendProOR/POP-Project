@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HotelReservations.Windows"
         mc:Ignorable="d"
-        Title="ReservationGuests" Height="450" Width="800">
+        Title="ReservationGuests" Height="500" Width="800">
     <Grid>
-        <DataGrid AutoGeneratingColumn="GuestsDG_AutoGeneratingColumn" Margin="12,12,12,92" Name="GuestsDG" IsReadOnly="True"/>
-        <Button Content="Close" Height="39" HorizontalAlignment="Right" Margin="0,0,12,31" Name="btnClose" VerticalAlignment="Bottom" Width="102" Click="btnClose_Click" />
-        <Button Content="Pick" Height="39" HorizontalAlignment="Left" Margin="237,0,0,31" Name="btnPick" VerticalAlignment="Bottom" Width="66" Click="btnPickGuest_Click" />
+        <DataGrid AutoGeneratingColumn="GuestsDG_AutoGeneratingColumn" Margin="20,20,20,80" Name="GuestsDG" IsReadOnly="True" SelectionMode="Extended" SelectionUnit="FullRow" />
+        <Button Content="Close" Height="30" HorizontalAlignment="Right" Margin="0,0,20,30" Name="btnClose" VerticalAlignment="Bottom" Width="100" Click="btnClose_Click" />
+        <Button Content="Pick" Height="30" HorizontalAlignment="Right" Margin="237,0,140,30" Name="btnPick" VerticalAlignment="Bottom" Width="60" Click="btnPickGuest_Click" />
     </Grid>
 </Window>

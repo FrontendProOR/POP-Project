@@ -47,8 +47,8 @@ namespace HotelReservations.Service
             else
             {
                 roomTypeRepository.Update(roomType);
-                var index = Hotel.GetInstance().RoomTypes.FindIndex(r => r.Id == roomType.Id);
-                Hotel.GetInstance().RoomTypes[index] = roomType;
+                //var index = Hotel.GetInstance().RoomTypes.FindIndex(r => r.Id == roomType.Id);
+                //Hotel.GetInstance().RoomTypes[index] = roomType;
             }
         }
 

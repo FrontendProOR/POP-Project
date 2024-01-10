@@ -29,12 +29,13 @@ namespace HotelReservations.Windows
             roomService = new RoomService();
             InitializeComponent();
             FillData();
+            LoadRoomTypes();
         }
 
         public void FillData()
         {
             var roomService = new RoomService();
-            var rooms = roomService.GetAllRooms();
+            var rooms = roomService.GetAllRooms().Where(r => !r.IsDeleted).ToList();
             
             view = CollectionViewSource.GetDefaultView(rooms);
             view.Filter = DoFilter;
@@ -44,19 +45,74 @@ namespace HotelReservations.Windows
             RoomsDG.IsSynchronizedWithCurrentItem = true;
         }
 
+        private void LoadRoomTypes()
+        {
+            List<RoomType> roomTypes = new RoomService().GetAllRoomTypes();
+            RoomTypeSearchCB.ItemsSource = roomTypes;
+            RoomTypeSearchCB.DisplayMemberPath = "Name";
+        }
+        private void RoomTypeSearchCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ApplySearchFilters();
+        }
+
+        private void IsActiveCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            ApplySearchFilters();
+        }
+
+        private void IsActiveCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ApplySearchFilters();
+        }
+        private void ApplySearchFilters()
+        {
+            string roomNumber = RoomNumberSearchTB.Text;
+            string roomType = (RoomTypeSearchCB.SelectedItem as RoomType)?.Name;
+            bool isActive = IsActiveCheckBox.IsChecked ?? false;
+
+            // Call your service methods to get the filtered list based on search criteria
+            List<Room> filteredRooms = roomService.GetFilteredRooms(roomNumber, roomType, isActive);
+
+            // Update the DataGrid with the filtered list
+            RoomsDG.ItemsSource = filteredRooms;
+        }
+        //private bool DoFilter(object roomObject)
+        //{
+        //    var room = roomObject as Room;
+
+        //    var roomNumberSearchParam = RoomNumberSearchTB.Text;
+
+        //    if (room.RoomNumber.Contains(roomNumberSearchParam))
+        //    {
+        //        return true;
+        //    }
+
+        //    return false;
+        //}
+        public List<Room> GetFilteredRooms(string roomNumber, string roomTypeName, bool isActive)
+        {
+            var rooms = Hotel.GetInstance().Rooms;
+
+            var filteredRooms = rooms.Where(r =>
+                (string.IsNullOrEmpty(roomNumber) || r.RoomNumber.ToLower().Contains(roomNumber.ToLower())) &&
+                (string.IsNullOrEmpty(roomTypeName) || r.RoomType.Name.ToLower().Contains(roomTypeName.ToLower())) &&
+                (isActive ? r.IsActive : !r.IsDeleted)
+            ).ToList();
+
+            return filteredRooms;
+        }
+
         private bool DoFilter(object roomObject)
         {
             var room = roomObject as Room;
 
-            var roomNumberSearchParam = RoomNumberSearchTB.Text;
+            var roomNumberSearchParam = RoomNumberSearchTB.Text.ToLower();
 
-            if (room.RoomNumber.Contains(roomNumberSearchParam))
-            {
-                return true;
-            }
-
-            return false;
+            // Check if the room number contains the search parameter
+            return room.RoomNumber.ToLower().Contains(roomNumberSearchParam);
         }
+
 
         private void RoomsDG_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {

@@ -9,6 +9,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -17,8 +18,19 @@
             <Button Name="EditBtn" Content="Edit" BorderBrush="LightGray" Margin="5,0,0,0"  Click="EditBtn_Click" />
             <Button Name="DeleteBtn" Content="Delete" BorderBrush="LightGray" Margin="5,0,0,0" Click="DeleteBtn_Click"/>
         </ToolBar>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Label Content="Room Number:"/>
+            <TextBox Name="RoomNumberTextBox"/>
+            <Label Content="Arrival Date:"/>
+            <DatePicker Name="ArrivalDatePicker"/>
+            <Label Content="Departure Date:"/>
+            <DatePicker Name="DepartureDatePicker"/>
+            <Button Content="Search" Click="SearchBtn_Click"/>
+        </StackPanel>
 
-        <DataGrid Name="ReservationsDG" Grid.Row="1" 
-        IsReadOnly="True" AutoGeneratingColumn="ReservationsDG_AutoGeneratingColumn"/>
+        <DataGrid Name="ReservationsDG" Grid.Row="2" 
+        IsReadOnly="True" AutoGeneratingColumn="ReservationsDG_AutoGeneratingColumn" MouseDoubleClick="ReservationsDG_MouseDoubleClick" />
+        
+
     </Grid>
 </Window>
