@@ -95,22 +95,71 @@ namespace HotelReservations
                 IRoomRepository roomRepository = new RoomRepository();
                 var loadedRooms = roomRepository.GetAll();
 
+                IUserRepository userRepository = new UserRepository();
+                var loadedUsers = userRepository.GetAll();
+
+                IRoomTypeRepository roomTypeRepository = new RoomTypeRepository();
+                var loadedRoomTypes = roomTypeRepository.GetAll();
+
+                IGuestRepository guestRepository = new GuestRepository();
+                var loadedGuests = guestRepository.GetAll();
+
+                IPriceRepository priceRepository = new PriceRepository();
+                var loadedpriceList = priceRepository.GetAll();
+
+                IReservationRepository reservationRepository = new ReservationRepository();
+                var loadedReservations = reservationRepository.GetAll();
+
+                IReservationGuestRepository reservationGuestRepository = new ReservationGuestRepository();
+                var loadedReservationGuests = reservationGuestRepository.GetAll();
+
+
                 if (loadedRooms != null)
                 {
                     Hotel.GetInstance().Rooms = loadedRooms;
                 }
 
-                var newRoom = new Room()
+                if (loadedUsers != null)
                 {
-                    RoomNumber = "03",
-                    HasTV = true,
-                    HasMiniBar = false,
-                    IsActive = true,
-                    RoomType = singleBedRoom
-                };
+                    Hotel.GetInstance().Users = loadedUsers;
+                }
 
-                newRoom.Id = roomRepository.Insert(newRoom);
-                Hotel.GetInstance().Rooms.Add(newRoom);
+                if (loadedRoomTypes != null)
+                {
+                    Hotel.GetInstance().RoomTypes = loadedRoomTypes;
+                }
+
+                if (loadedGuests != null)
+                {
+                    Hotel.GetInstance().Guests = loadedGuests;
+                }
+
+                if (loadedpriceList != null)
+                {
+                    Hotel.GetInstance().PriceList = loadedpriceList;
+                }
+
+                if (loadedReservations != null)
+                {
+                    Hotel.GetInstance().Reservations = loadedReservations;
+                }
+
+                if (loadedReservationGuests != null)
+                {
+                    Hotel.GetInstance().ReservationGuests = loadedReservationGuests;
+                }
+
+                //var newRoom = new Room()
+                //{
+                //    RoomNumber = "03",
+                //    HasTV = true,
+                //    HasMiniBar = false,
+                //    IsActive = true,
+                //    RoomType = singleBedRoom
+                //};
+
+                //newRoom.Id = roomRepository.Insert(newRoom);
+                //Hotel.GetInstance().Rooms.Add(newRoom);
 
                 // Samo za primer...
                 //BinaryRoomRepository binaryRoomRepository = new BinaryRoomRepository();
@@ -126,24 +175,24 @@ namespace HotelReservations
             }
         }
 
-        public static void PersistData()
-        {
-            try
-            {
-                // Kada se gasi program, čuvamo u rooms.txt
-                // Posle toga će rooms.txt postojati (ako nešto ne pođe po zlu)
-                IRoomRepository roomRepository = new CSVRoomRepository();
-                roomRepository.Save(Hotel.GetInstance().Rooms);
+        //public static void PersistData()
+        //{
+        //    try
+        //    {
+        //        // Kada se gasi program, čuvamo u rooms.txt
+        //        // Posle toga će rooms.txt postojati (ako nešto ne pođe po zlu)
+        //        IRoomRepository roomRepository = new CSVRoomRepository();
+        //        roomRepository.Save(Hotel.GetInstance().Rooms);
 
 
-                //BinaryRoomRepository binaryRoomRepository = new BinaryRoomRepository();
-                //binaryRoomRepository.Save(Hotel.GetInstance().Rooms);
+        //        //BinaryRoomRepository binaryRoomRepository = new BinaryRoomRepository();
+        //        //binaryRoomRepository.Save(Hotel.GetInstance().Rooms);
 
-            }
-            catch (CouldntPersistDataException)
-            {
-                Console.WriteLine("Call an administrator, something weird is happening with the files");
-            }
-        }
+        //    }
+        //    catch (CouldntPersistDataException)
+        //    {
+        //        Console.WriteLine("Call an administrator, something weird is happening with the files");
+        //    }
+        //}
     }
 }

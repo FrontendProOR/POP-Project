@@ -17,15 +17,25 @@
                 Header="General"
                 Height="30">
                 <MenuItem 
-                    Name="RoomsMI" 
-                    Header="Rooms"
-                    Click="RoomsMI_Click"
-                    />
-                <MenuItem 
                     Name="UsersMI" 
                     Header="Users"
                     Click="UsersMI_Click"
                     />
+                <MenuItem 
+    Name="UserTypesMI"
+    Header="User Types"
+    Click="UserTypesMI_Click"/>
+                <MenuItem 
+Name="GuestsMI" 
+Header="Guests"
+Click="GuestsMI_Click"
+/>
+
+                <MenuItem 
+    Name="RoomsMI" 
+    Header="Rooms"
+    Click="RoomsMI_Click"
+    />
                 <MenuItem
                     Name="RoomTypesMI"
                     Header="RoomTypes"
@@ -34,20 +44,13 @@
                     Name="PricesMI" 
                     Header="Prices" 
                     Click="PricesMI_Click"/>
-                <MenuItem 
-                    Name="UserTypesMI"
-                    Header="User Types"
-                    Click="UserTypesMI_Click"/>
-                <MenuItem 
+
+                <!--<MenuItem 
                 Name="ReservationsMI" 
                 Header="Reservations"
                 Click="ReservationsMI_Click"
-                />
-                <MenuItem 
-                Name="GuestsMI" 
-                Header="Guests"
-                Click="GuestsMI_Click"
-                />
+                />-->
+
             </MenuItem>
         </Menu>
 

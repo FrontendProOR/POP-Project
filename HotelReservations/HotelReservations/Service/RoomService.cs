@@ -108,7 +108,13 @@ namespace HotelReservations.Service
                 
             //}
         }
+        public string GetRoomTypeNameByRoomNumber(string roomNumber)
+        {
+            var rooms = Hotel.GetInstance().Rooms;
+            var room = rooms.FirstOrDefault(r => r.RoomNumber == roomNumber);
 
+            return room?.RoomType?.Name ?? string.Empty;
+        }
         public void DeleteRoom(int roomId)
         {
             // Implement logic for logically deleting a room

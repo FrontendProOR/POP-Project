@@ -1,10 +1,6 @@
 ﻿using HotelReservations.Model;
 using HotelReservations.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 namespace HotelReservations.Service
 {
@@ -25,9 +21,18 @@ namespace HotelReservations.Service
         public void SaveReservationGuest(ReservationGuest reservationGuest)
         {
 
-            reservationGuestRepository.Insert(reservationGuest);
+            //reservationGuestRepository.Insert(reservationGuest);
             //Hotel.GetInstance().ReservationGuests.Add(reservationGuest);
-
+            try
+            {
+                reservationGuestRepository.Insert(reservationGuest);
+            }
+            catch (SqlException ex)
+            {
+                // Log the exception or handle it as appropriate for your application
+                Console.WriteLine($"SQL Exception: {ex.Message}");
+                // Optionally, you can choose not to rethrow the exception or take other actions as needed
+            }
         }
     }
 }

@@ -1,12 +1,5 @@
-﻿using HotelReservations.Exceptions;
-using HotelReservations.Model;
+﻿using HotelReservations.Model;
 using HotelReservations.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace HotelReservations.Service
 {
@@ -45,6 +38,12 @@ namespace HotelReservations.Service
                 //Hotel.GetInstance().PriceList[index] = price;
             }
         }
+        public double GetPriceValueByRoomTypeName(string roomTypeName)
+        {
+            var priceList = GetPriceList();
+            var price = priceList.FirstOrDefault(p => p.RoomType.Name == roomTypeName && p.IsActive);
 
+            return price?.PriceValue ?? 0;
+        }
     }
 }

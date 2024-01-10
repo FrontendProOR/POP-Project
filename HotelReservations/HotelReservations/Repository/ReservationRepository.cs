@@ -1,13 +1,6 @@
 ﻿using HotelReservations.Model;
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using HotelReservations.Windows;
 
 namespace HotelReservations.Repository
 {
@@ -94,7 +87,34 @@ namespace HotelReservations.Repository
                 command.ExecuteNonQuery();
             }
         }
+        public Room GetRoomByNumber(string roomNumber)
+        {
+            using (SqlConnection conn = new SqlConnection(Config.CONNECTION_STRING))
+            {
+                conn.Open();
 
+                var command = conn.CreateCommand();
+                command.CommandText = "SELECT * FROM dbo.[room] WHERE room_number = @room_number";
+                command.Parameters.Add(new SqlParameter("room_number", roomNumber));
+
+                var reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    var room = new Room()
+                    {
+                        Id = (int)reader["room_id"],
+                        RoomNumber = (string)reader["room_number"],
+                        // Populate other room properties as needed
+                        // ...
+                    };
+
+                    return room;
+                }
+
+                return null;
+            }
+        }
         public void Save(List<Reservation> reservationList)
         {
             throw new NotImplementedException();

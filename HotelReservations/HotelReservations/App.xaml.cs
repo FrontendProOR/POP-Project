@@ -20,7 +20,7 @@ namespace HotelReservations
         protected override void OnExit(ExitEventArgs e)
         {
             base.OnExit(e);
-            DataUtil.PersistData();
+            //DataUtil.PersistData();
         }
     }
 
