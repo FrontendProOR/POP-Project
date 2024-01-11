@@ -1,0 +1,33 @@
+﻿<Window x:Class="HotelReservations.Windows.ReservationDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Reservation Details" Height="400" Width="500">
+    <Grid>
+        <StackPanel>
+            <Label x:Name="reservationDataLabel" Content="Reservation Data"/>
+            <StackPanel Margin="10">
+                <!-- Add labels and text blocks to display reservation details -->
+                <TextBlock Text="{Binding ReservationInfo}" />
+            </StackPanel>
+
+            <Label x:Name="roomDataLabel" Content="Room Data"/>
+            <StackPanel Margin="10">
+                <!-- Add labels and text blocks to display room details -->
+                <TextBlock Text="{Binding RoomInfo}" />
+            </StackPanel>
+
+            <Label x:Name="guestDataLabel" Content="Guest Data"/>
+            <ListBox x:Name="guestListBox" Margin="10" ItemsSource="{Binding GuestList}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <!-- Add labels and text blocks to display guest details -->
+                        <StackPanel>
+                            <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding IDNumber}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+    </Grid>
+</Window>

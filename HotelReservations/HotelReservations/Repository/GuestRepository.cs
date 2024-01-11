@@ -81,7 +81,36 @@ namespace HotelReservations.Repository
                 command.ExecuteNonQuery();
             }
         }
+        public Guest GetGuestById(int guestId)
+        {
+            using (SqlConnection conn = new SqlConnection(Config.CONNECTION_STRING))
+            {
+                conn.Open();
 
+                var commandText = "SELECT * FROM dbo.guest WHERE guest_id = @guestId";
+                using (SqlCommand command = new SqlCommand(commandText, conn))
+                {
+                    command.Parameters.AddWithValue("@guestId", guestId);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new Guest()
+                            {
+                                Id = (int)reader["guest_id"],
+                                Name = reader["guest_name"] as string,
+                                Surname = reader["guest_surname"] as string,
+                                IDNumber = reader["guest_id_number"] as string,
+                                IsActive = (bool)reader["guest_is_active"]
+                            };
+                        }
+                    }
+                }
+
+                return null; // Return null if guest with the given ID is not found
+            }
+        }
         public void Save(List<Guest> guestList)
         {
             throw new NotImplementedException();

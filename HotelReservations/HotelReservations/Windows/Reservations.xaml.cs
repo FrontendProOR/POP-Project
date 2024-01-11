@@ -1,20 +1,10 @@
 ﻿using HotelReservations.Model;
-using HotelReservations.Repository;
 using HotelReservations.Service;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace HotelReservations.Windows
 {
@@ -25,11 +15,14 @@ namespace HotelReservations.Windows
     {
         private ICollectionView view;
         private ReservationService reservationService;
-        
+        private RoomService roomService;
+        private GuestService guestService;
         public Reservations()
         {
             InitializeComponent();
             reservationService = new ReservationService();
+            roomService = new RoomService();
+            guestService = new GuestService();
             FillData();
 
         }
@@ -180,10 +173,21 @@ namespace HotelReservations.Windows
                 Show();
             }
         }
+
         private void ReservationsDG_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            // Handle the double-click event here if needed
+            var selectedReservation = (Reservation)view.CurrentItem;
+
+            if (selectedReservation != null)
+            {
+                var detailsWindow = new ReservationDetailsWindow(selectedReservation,
+                                                                roomService.GetRoomByReservation(selectedReservation),
+                                                                guestService.GetGuestByReservation(selectedReservation));
+                detailsWindow.ShowDialog();
+            }
         }
+
+
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
             if (view.CurrentItem == null) { return; }

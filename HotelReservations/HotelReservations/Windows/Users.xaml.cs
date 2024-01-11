@@ -1,7 +1,5 @@
 ﻿using HotelReservations.Model;
 using HotelReservations.Service;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Data;

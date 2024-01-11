@@ -1,10 +1,5 @@
 ﻿using HotelReservations.Model;
 using HotelReservations.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotelReservations.Service
 {
@@ -115,6 +110,13 @@ namespace HotelReservations.Service
 
             return room?.RoomType?.Name ?? string.Empty;
         }
+
+        public Room GetRoomByReservation(Reservation reservation)
+        {
+            // Implement logic to retrieve the room associated with the reservation
+            return roomRepository.GetRoomByRoomNumber(reservation.RoomNumber);
+        }
+
         public void DeleteRoom(int roomId)
         {
             // Implement logic for logically deleting a room
@@ -126,5 +128,18 @@ namespace HotelReservations.Service
                 roomRepository.Delete(roomId);
             //}
         }
+        public List<Room> GetFilteredRoomsByRoomNumberAndRoomType(string roomNumber, string roomTypeName, bool isActive)
+        {
+            var rooms = Hotel.GetInstance().Rooms;
+
+            var filteredRooms = rooms.Where(r =>
+                (string.IsNullOrEmpty(roomNumber) || r.RoomNumber.ToLower().Contains(roomNumber.ToLower())) &&
+                (string.IsNullOrEmpty(roomTypeName) || r.RoomType.Name.ToLower().Contains(roomTypeName.ToLower())) &&
+                (!r.IsDeleted)
+            ).ToList();
+
+            return filteredRooms;
+        }
+
     }
 }

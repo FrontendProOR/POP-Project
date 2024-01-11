@@ -4,12 +4,8 @@ using System.IO;
 
 namespace HotelReservations.Repository
 {
-    // Koristimo repozitorijume da bismo izolovali operacije
-    // vezane za eksternu memoriju. Sad koristimo csv, sutra bazu,
-    // potrebno nam je lako uvođenje promena.
-    // Na narednim terminima ćemo "apstrahovati" repozitorijume
-    // interfejsima.
-    public class CSVRoomRepository : IRoomRepository
+    
+    public class CSVRoomRepository 
     {
         private string ToCSV(Room room)
         {

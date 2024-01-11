@@ -166,5 +166,46 @@ namespace HotelReservations.Repository
 
             return roomTypes;
         }
+
+        public Room GetRoomByRoomNumber(string roomNumber)
+        {
+            using (SqlConnection conn = new SqlConnection(Config.CONNECTION_STRING))
+            {
+                conn.Open();
+
+                var commandText = "SELECT r.*, rt.* FROM dbo.room r\r\nINNER JOIN dbo.room_type rt ON r.room_type_id = rt.room_type_id " +
+                                  "WHERE r.room_number = @roomNumber";
+
+                using (SqlCommand command = new SqlCommand(commandText, conn))
+                {
+                    command.Parameters.AddWithValue("@roomNumber", roomNumber);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new Room()
+                            {
+                                Id = (int)reader["room_id"],
+                                RoomNumber = reader["room_number"] as string,
+                                HasTV = (bool)reader["has_TV"],
+                                HasMiniBar = (bool)reader["has_mini_bar"],
+                                IsActive = (bool)reader["room_is_active"],
+                                IsDeleted = (bool)reader["is_deleted"],
+                                RoomType = new RoomType()
+                                {
+                                    Id = (int)reader["room_type_id"],
+                                    Name = reader["room_type_name"] as string,
+                                    NumberOfBeds = (int)reader["number_of_beds"],
+                                    IsActive = (bool)reader["room_type_is_active"]
+                                }
+                            };
+                        }
+                    }
+                }
+
+                return null; // Return null if room with the given room number is not found
+            }
+        }
     }
 }

@@ -1,19 +1,16 @@
 ﻿using HotelReservations.Model;
 using HotelReservations.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotelReservations.Service
 {
     class GuestService
     {
         IGuestRepository guestRepository;
+        IReservationGuestRepository reservationGuestRepository;
         public GuestService()
         {
             guestRepository = new GuestRepository();
+            reservationGuestRepository = new ReservationGuestRepository();
         }
 
         public List<Guest> GetAllGuests()
@@ -26,6 +23,13 @@ namespace HotelReservations.Service
             var guests = Hotel.GetInstance().Guests;
             guests.Sort((r1, r2) => r1.IDNumber.CompareTo(r2.IDNumber));
             return guests;
+        }
+
+        public List<Guest> GetGuestByReservation(Reservation reservation)
+        {
+            List<Guest> guests = reservationGuestRepository.GetGuestsByReservationId(reservation.Id);
+            return guests;
+            //return guestRepository.GetGuestById(reservation.GuestId);
         }
 
         public List<Guest> GetAllGuestsByIDNumber(string startingWith)

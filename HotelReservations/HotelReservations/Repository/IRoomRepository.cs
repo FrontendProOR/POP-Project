@@ -4,6 +4,7 @@ namespace HotelReservations.Repository
 {
     public interface IRoomRepository
     {
+        Room GetRoomByRoomNumber(string roomNumber);
         List<Room> GetAll();
         List<RoomType> GetAllRoomTypes();
         int Insert(Room room);

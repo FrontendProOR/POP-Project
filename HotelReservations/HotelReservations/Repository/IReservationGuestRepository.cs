@@ -9,5 +9,6 @@ namespace HotelReservations.Repository
         int Insert(ReservationGuest reservationGuest);
         void Update(ReservationGuest reservationGuest);
         void Save(List<ReservationGuest> reservationGuests);
+        List<Guest> GetGuestsByReservationId(int reservationId);
     }
 }

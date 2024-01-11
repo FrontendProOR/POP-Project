@@ -1,19 +1,9 @@
 ﻿using HotelReservations.Model;
 using HotelReservations.Service;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace HotelReservations.Windows
 {
@@ -28,6 +18,7 @@ namespace HotelReservations.Windows
         private ReservationGuest contextReservationGuest;
         private ReservationGuestService reservationGuestService;
         private Guest contextGuest;
+        private RoomService roomService;
         public AddEditReservation(Reservation? reservation = null)
         {
             if (reservation == null)
@@ -45,7 +36,7 @@ namespace HotelReservations.Windows
             reservationGuestService = new ReservationGuestService();
             contextReservationGuest = new ReservationGuest();
             contextGuest = new Guest();
-
+            roomService = new RoomService();
             AdjustWindow(reservation);
 
             this.DataContext = contextReservation;
@@ -62,9 +53,14 @@ namespace HotelReservations.Windows
             //ReservationGuestsDG.ItemsSource = null;
             //ReservationGuestsDG.ItemsSource = view;
             //ReservationGuestsDG.IsSynchronizedWithCurrentItem = true;
+
+
             var roomService = new RoomService();
             var rooms = roomService.GetAllRooms().Where(r => !r.IsDeleted).ToList();
+            var roomTypes = roomService.GetAllRoomTypes();
 
+
+            RoomTypeSearchCB.ItemsSource = roomTypes;
             view = CollectionViewSource.GetDefaultView(rooms);
             view.Filter = DoRoomFilter;
 
@@ -202,5 +198,25 @@ namespace HotelReservations.Windows
         {
 
         }
+        private void RoomTypeSearchCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ApplyRoomSearchFilters();
+        }
+        private void ApplyRoomSearchFilters()
+        {
+            string roomNumber = RoomNumberSearchTB.Text;
+            string roomType = (RoomTypeSearchCB.SelectedItem as RoomType)?.Name;
+
+            // Call your service methods to get the filtered list based on search criteria
+            List<Room> filteredRooms = roomService.GetFilteredRoomsByRoomNumberAndRoomType(roomNumber, roomType, true);
+
+            // Update the DataGrid with the filtered list
+            AvailableRoomsDG.ItemsSource = filteredRooms;
+        }
+        private void RoomNumberSearchTB_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ApplyRoomSearchFilters();
+        }
+
     }
 }

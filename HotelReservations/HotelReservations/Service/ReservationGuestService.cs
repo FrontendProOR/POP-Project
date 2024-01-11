@@ -34,5 +34,9 @@ namespace HotelReservations.Service
                 // Optionally, you can choose not to rethrow the exception or take other actions as needed
             }
         }
+        public List<Guest> GetGuestsByReservationId(int reservationId)
+        {
+            return reservationGuestRepository.GetGuestsByReservationId(reservationId);
+        }
     }
 }

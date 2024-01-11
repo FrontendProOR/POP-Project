@@ -110,6 +110,40 @@ namespace HotelReservations.Repository
             }
         }
 
+        public List<Guest> GetGuestsByReservationId(int reservationId)
+        {
+            var guests = new List<Guest>();
+            using (SqlConnection conn = new SqlConnection(Config.CONNECTION_STRING))
+            {
+                conn.Open();
+
+                var commandText = "SELECT g.* FROM dbo.[reservation_guest] rg\r\nINNER JOIN dbo.guest g ON rg.guest_id = g.guest_id\r\nWHERE rg.reservation_id = @reservationId";
+                using (SqlCommand command = new SqlCommand(commandText, conn))
+                {
+                    command.Parameters.AddWithValue("@reservationId", reservationId);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var guest = new Guest()
+                            {
+                                Id = (int)reader["guest_id"],
+                                Name = reader["guest_name"] as string,
+                                Surname = reader["guest_surname"] as string,
+                                IDNumber = reader["guest_id_number"] as string,
+                                IsActive = (bool)reader["guest_is_active"]
+                            };
+
+                            guests.Add(guest);
+                        }
+                    }
+                }
+
+                return guests;
+            }
+        }
+
         public void Save(List<ReservationGuest> reservationGuests)
         {
             throw new NotImplementedException();
