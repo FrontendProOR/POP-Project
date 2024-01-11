@@ -37,15 +37,16 @@ namespace HotelReservations.Service
             return reservations;
         }
 
-        public void SaveReservation(Reservation reservation)
+        public int SaveReservation(Reservation reservation)
         {
+            int generatedReservationId = 0;
             if (reservation.Id == 0)
             {
                 if (IsRoomAvailable(reservation.RoomNumber, reservation.StartDateTime, reservation.EndDateTime))
                 {
                     string roomTypeName = roomService.GetRoomTypeNameByRoomNumber(reservation.RoomNumber);
                     reservation.TotalPrice = CalculateTotalPrice(roomTypeName, reservation.StartDateTime, reservation.EndDateTime);
-                    reservationRepository.Insert(reservation);
+                    generatedReservationId = reservationRepository.Insert(reservation);
                     var room = GetRoomByReservation(reservation);
                     if (room != null)
                     {
@@ -65,6 +66,8 @@ namespace HotelReservations.Service
                 // Handle the situation when updating an existing reservation
             }
             UpdateRoomsBasedOnExpiredReservations();
+
+            return generatedReservationId;
         }
 
         public bool IsRoomAvailable(string roomNumber, DateTime startDateTime, DateTime endDateTime)

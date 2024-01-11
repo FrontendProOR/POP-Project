@@ -30,7 +30,9 @@ namespace HotelReservations.Service
             catch (SqlException ex)
             {
                 // Log the exception or handle it as appropriate for your application
-                Console.WriteLine($"SQL Exception: {ex.Message}");
+                //Console.WriteLine($"SQL Exception: {ex.Message}");
+                //Log.Error($"SQL Exception: {ex.Message}");
+                throw ex;
                 // Optionally, you can choose not to rethrow the exception or take other actions as needed
             }
         }

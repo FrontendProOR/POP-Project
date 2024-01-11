@@ -1,4 +1,5 @@
 ﻿using HotelReservations.Model;
+using HotelReservations.Repository;
 using HotelReservations.Service;
 using System.ComponentModel;
 using System.Windows;
@@ -19,6 +20,7 @@ namespace HotelReservations.Windows
         private ReservationGuestService reservationGuestService;
         private Guest contextGuest;
         private RoomService roomService;
+        private ReservationGuestRepository reservationGuestRepository;
         public AddEditReservation(Reservation? reservation = null)
         {
             if (reservation == null)
@@ -32,6 +34,7 @@ namespace HotelReservations.Windows
 
             InitializeComponent();
             FillData();
+            reservationGuestRepository = new ReservationGuestRepository();
             reservationService = new ReservationService();
             reservationGuestService = new ReservationGuestService();
             contextReservationGuest = new ReservationGuest();
@@ -156,12 +159,16 @@ namespace HotelReservations.Windows
             contextReservation.RoomNumber = selectedRoom.RoomNumber;
 
             // Save reservation and associated data
-            reservationService.SaveReservation(contextReservation);
-
+            //reservationService.SaveReservation(contextReservation);
+            int reservationId = reservationService.SaveReservation(contextReservation);
+            contextReservation.Id = reservationId;
             contextReservationGuest.ReservationId = contextReservation;
+            //contextReservationGuest.GuestId = contextGuest;
+            //contextReservationGuest.ReservationId.Id = reservationId;
             contextReservationGuest.GuestId = contextGuest;
-            reservationGuestService.SaveReservationGuest(contextReservationGuest);
 
+            reservationGuestService.SaveReservationGuest(contextReservationGuest);
+            //reservationGuestRepository.Insert(contextReservationGuest);
             DialogResult = true;
             Close();
         }

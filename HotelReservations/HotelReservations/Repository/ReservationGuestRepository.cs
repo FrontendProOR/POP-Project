@@ -71,6 +71,7 @@ namespace HotelReservations.Repository
         //}
 
 
+        /*
         public int Insert(ReservationGuest reservationGuest)
         {
             using (SqlConnection conn = new SqlConnection(Config.CONNECTION_STRING))
@@ -89,6 +90,26 @@ namespace HotelReservations.Repository
                 return (int)command.ExecuteNonQuery();
             }
         }
+         */
+        public int Insert(ReservationGuest reservationGuest)
+        {
+            using (SqlConnection conn = new SqlConnection(Config.CONNECTION_STRING))
+            {
+                conn.Open();
+
+                var command = conn.CreateCommand();
+                command.CommandText = @"
+            INSERT INTO dbo.[reservation_guest] (reservation_id, guest_id)
+            VALUES (@reservation_id, @guest_id)
+        ";
+
+                command.Parameters.Add(new SqlParameter("@reservation_id", reservationGuest.ReservationId.Id));
+                command.Parameters.Add(new SqlParameter("@guest_id", reservationGuest.GuestId.Id));
+
+                return (int)command.ExecuteNonQuery();
+            }
+        }
+
 
         public void Update(ReservationGuest reservationGuest)
         {
