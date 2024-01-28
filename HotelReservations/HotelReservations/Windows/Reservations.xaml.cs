@@ -210,5 +210,92 @@ namespace HotelReservations.Windows
 
             }
         }
+
+
+        private void SortByComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string sortBy = ((ComboBoxItem)SortByComboBox.SelectedItem)?.Content.ToString();
+            string sortOrder = ((ComboBoxItem)SortOrderComboBox.SelectedItem)?.Content.ToString();
+
+            if (!string.IsNullOrEmpty(sortBy) && !string.IsNullOrEmpty(sortOrder))
+            {
+                // Check the selected sorting criteria
+                switch (sortBy)
+                {
+                    case "Sort by Arrival Date":
+                    case "Sort by Departure Date":
+                        // For sorting by arrival date or departure date, call the unified sorting method
+                        SortReservationsByDate(sortBy, sortOrder);
+                        break;
+                    case "Sort by Price":
+                        // For sorting by price, call the separate sorting method
+                        SortReservationsByPrice(sortOrder);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+
+        private void SortReservationsByDate(string sortBy, string sortOrder)
+        {
+            if (sortBy == "Arrival Date")
+            {
+                if (sortOrder == "Ascending")
+                {
+                    view.SortDescriptions.Clear();
+                    view.SortDescriptions.Add(new SortDescription("StartDateTime", ListSortDirection.Ascending));
+                    ReservationsDG.ItemsSource = view;
+                    view.Refresh();
+                }
+                else if (sortOrder == "Descending")
+                {
+                    view.SortDescriptions.Clear();
+                    view.SortDescriptions.Add(new SortDescription("StartDateTime", ListSortDirection.Descending));
+                    ReservationsDG.ItemsSource = view;
+                    view.Refresh();
+                }
+            }
+            else if (sortBy == "Departure Date")
+            {
+                if (sortOrder == "Ascending")
+                {
+                    view.SortDescriptions.Clear();
+                    view.SortDescriptions.Add(new SortDescription("EndDateTime", ListSortDirection.Ascending));
+                    ReservationsDG.ItemsSource = view;
+                    view.Refresh();
+                }
+                else if (sortOrder == "Descending")
+                {
+                    view.SortDescriptions.Clear();
+                    view.SortDescriptions.Add(new SortDescription("EndDateTime", ListSortDirection.Descending));
+                    ReservationsDG.ItemsSource = view;
+                    view.Refresh();
+                }
+            }
+        }
+
+
+        private void SortReservationsByPrice(string sortOrder)
+        {
+            if (sortOrder == "Ascending")
+            {
+                view.SortDescriptions.Clear();
+                view.SortDescriptions.Add(new SortDescription("TotalPrice", ListSortDirection.Ascending));
+                ReservationsDG.ItemsSource = view;
+                view.Refresh();
+            }
+            else if (sortOrder == "Descending")
+            {
+                view.SortDescriptions.Clear();
+                view.SortDescriptions.Add(new SortDescription("TotalPrice", ListSortDirection.Descending));
+                ReservationsDG.ItemsSource = view;
+                view.Refresh();
+            }
+        }
+
+
+
     }
 }

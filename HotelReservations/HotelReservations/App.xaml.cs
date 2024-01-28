@@ -1,5 +1,4 @@
-﻿using HotelReservations.Windows;
-using System.Windows;
+﻿using System.Windows;
 
 namespace HotelReservations
 {
@@ -10,8 +9,9 @@ namespace HotelReservations
         {
              base.OnStartup(e);
             DataUtil.LoadData();
-            Login loginWindow = new Login();
-            loginWindow.ShowDialog();
+            MainWindow mainWindow = new MainWindow();
+            //Login loginWindow = new Login();
+            //loginWindow.ShowDialog();
 
         }
 

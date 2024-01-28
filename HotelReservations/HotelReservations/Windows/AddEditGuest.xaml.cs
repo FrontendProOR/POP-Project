@@ -44,12 +44,48 @@ namespace HotelReservations.Windows
 
         }
 
+        //private void SaveBtn_Click(object sender, RoutedEventArgs e)
+        //{
+
+        //    if (string.IsNullOrEmpty(contextGuest.Name))
+        //    {
+        //        MessageBox.Show("Fill required fields.", "Validation Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+        //        return;
+        //    }
+
+        //    guestService.SaveGuest(contextGuest);
+
+        //    DialogResult = true;
+        //    Close();
+        //}
+
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            // Validate Name
             if (string.IsNullOrEmpty(contextGuest.Name))
             {
-                MessageBox.Show("Fill required fields.", "Validation Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Name is a required field.", "Validation Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // Validate Surname
+            if (string.IsNullOrEmpty(contextGuest.Surname))
+            {
+                MessageBox.Show("Surname is a required field.", "Validation Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // Validate IDNumber
+            if (string.IsNullOrEmpty(contextGuest.IDNumber))
+            {
+                MessageBox.Show("ID Number is a required field.", "Validation Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // Validate IDNumber format (example: assuming it should be numeric)
+            if (!IsNumeric(contextGuest.IDNumber))
+            {
+                MessageBox.Show("ID Number should be a numeric value.", "Validation Failed", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -58,6 +94,12 @@ namespace HotelReservations.Windows
             DialogResult = true;
             Close();
         }
+
+        private bool IsNumeric(string value)
+        {
+            return int.TryParse(value, out _);
+        }
+
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {

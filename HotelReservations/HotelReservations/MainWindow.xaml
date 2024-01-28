@@ -5,54 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HotelReservations"
         mc:Ignorable="d"
-        Title="Hotel Reservations TM" Height="450" Width="800">
+        Title="Hotel Managing app" Height="450" Width="800" Background="#2E2E2E">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Menu Grid.Row="0">
-            <MenuItem 
-                Header="General"
-                Height="30">
-                <MenuItem 
-                    Name="UsersMI" 
-                    Header="Users"
-                    Click="UsersMI_Click"
-                    />
-                <MenuItem 
-    Name="UserTypesMI"
-    Header="User Types"
-    Click="UserTypesMI_Click"/>
-                <MenuItem 
-Name="GuestsMI" 
-Header="Guests"
-Click="GuestsMI_Click"
-/>
+        <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Grid.Row="1" Text="Hotel Managing app" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Bold" Foreground="White"/>
 
-                <MenuItem 
-    Name="RoomsMI" 
-    Header="Rooms"
-    Click="RoomsMI_Click"
-    />
-                <MenuItem
-                    Name="RoomTypesMI"
-                    Header="RoomTypes"
-                    Click="RoomTypesMI_Click"/>
-                <MenuItem 
-                    Name="PricesMI" 
-                    Header="Prices" 
-                    Click="PricesMI_Click"/>
-
-                <!--<MenuItem 
-                Name="ReservationsMI" 
-                Header="Reservations"
-                Click="ReservationsMI_Click"
-                />-->
-
-            </MenuItem>
-        </Menu>
-
+        </StackPanel>
+        
+        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Content="Log In" Click="Login_Click" Width="100" Height="30"/>
+        </StackPanel>
     </Grid>
 </Window>

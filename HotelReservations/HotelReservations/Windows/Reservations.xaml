@@ -20,12 +20,23 @@
         </ToolBar>
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <Label Content="Room Number:"/>
-            <TextBox Name="RoomNumberTextBox"/>
+            <TextBox Name="RoomNumberTextBox" Width="30"/>
             <Label Content="Arrival Date:"/>
             <DatePicker Name="ArrivalDatePicker"/>
             <Label Content="Departure Date:"/>
             <DatePicker Name="DepartureDatePicker"/>
             <Button Content="Search" Click="SearchBtn_Click"/>
+            <TextBlock Grid.Row="0" Margin="10,0,0,0" VerticalAlignment="Center" Text="Sort by:"/>
+            <ComboBox Name="SortByComboBox" Grid.Row="0" Margin="5" Width="30" SelectionChanged="SortByComboBox_SelectionChanged">
+                <ComboBoxItem Content="Sort by Arrival Date"/>
+                <ComboBoxItem Content="Sort by Departure Date"/>
+                <ComboBoxItem Content="Sort by Price"/>
+            </ComboBox>
+            <ComboBox Name="SortOrderComboBox" Grid.Row="0" Margin="5" Width="30" SelectionChanged="SortByComboBox_SelectionChanged">
+                <ComboBoxItem Content="Ascending"/>
+                <ComboBoxItem Content="Descending"/>
+            </ComboBox>
+
         </StackPanel>
 
         <DataGrid Name="ReservationsDG" Grid.Row="2" 

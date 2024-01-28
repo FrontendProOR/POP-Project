@@ -138,17 +138,72 @@ namespace HotelReservations.Windows
         //    Close();
         //}
 
+        //private void SaveBtn_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (contextReservation.TotalPrice == 0)
+        //    {
+        //        MessageBox.Show("Fill required fields.", "Validation Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+        //        return;
+        //    }
+
+        //    // Retrieve selected room number from the AvailableRoomsDG DataGrid
+        //    var selectedRoom = (Room)AvailableRoomsDG.SelectedItem;
+
+        //    if (selectedRoom == null)
+        //    {
+        //        MessageBox.Show("Please select a room.", "Validation Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+        //        return;
+        //    }
+
+        //    // Assign the selected room number to the contextReservation object
+        //    contextReservation.RoomNumber = selectedRoom.RoomNumber;
+
+        //    // Save reservation and associated data
+        //    //reservationService.SaveReservation(contextReservation);
+        //    int reservationId = reservationService.SaveReservation(contextReservation);
+        //    contextReservation.Id = reservationId;
+        //    contextReservationGuest.ReservationId = contextReservation;
+        //    //contextReservationGuest.GuestId = contextGuest;
+        //    //contextReservationGuest.ReservationId.Id = reservationId;
+        //    contextReservationGuest.GuestId = contextGuest;
+
+        //    reservationGuestService.SaveReservationGuest(contextReservationGuest);
+        //    //reservationGuestRepository.Insert(contextReservationGuest);
+        //    DialogResult = true;
+        //    Close();
+        //}
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (contextReservation.TotalPrice == 0)
+            // Validate Reservation Type
+            if (contextReservation.ReservationType == null)
             {
-                MessageBox.Show("Fill required fields.", "Validation Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please select a Reservation Type.", "Validation Failed", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            // Retrieve selected room number from the AvailableRoomsDG DataGrid
-            var selectedRoom = (Room)AvailableRoomsDG.SelectedItem;
+            // Validate Start DateTime
+            if (contextReservation.StartDateTime == null || contextReservation.StartDateTime < DateTime.Now)
+            {
+                MessageBox.Show("Please select a valid Start DateTime from now onwards.", "Validation Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
+            // Validate End DateTime
+            if (contextReservation.EndDateTime == null || contextReservation.EndDateTime > DateTime.Now.AddYears(10))
+            {
+                MessageBox.Show("Please select a valid End DateTime within the next 10 years.", "Validation Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // Validate Total Price
+            if (contextReservation.TotalPrice == 0)
+            {
+                MessageBox.Show("Total Price cannot be zero.", "Validation Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // Validate if a room is selected
+            var selectedRoom = (Room)AvailableRoomsDG.SelectedItem;
             if (selectedRoom == null)
             {
                 MessageBox.Show("Please select a room.", "Validation Failed", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -159,16 +214,16 @@ namespace HotelReservations.Windows
             contextReservation.RoomNumber = selectedRoom.RoomNumber;
 
             // Save reservation and associated data
-            //reservationService.SaveReservation(contextReservation);
             int reservationId = reservationService.SaveReservation(contextReservation);
             contextReservation.Id = reservationId;
+
             contextReservationGuest.ReservationId = contextReservation;
-            //contextReservationGuest.GuestId = contextGuest;
-            //contextReservationGuest.ReservationId.Id = reservationId;
             contextReservationGuest.GuestId = contextGuest;
 
             reservationGuestService.SaveReservationGuest(contextReservationGuest);
-            //reservationGuestRepository.Insert(contextReservationGuest);
+
+            MessageBox.Show("Reservation saved successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
             DialogResult = true;
             Close();
         }

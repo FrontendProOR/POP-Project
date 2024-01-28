@@ -11,6 +11,7 @@
         <Menu>
             <MenuItem Header="Reservations" Click="OpenReservationsWindow"/>
             <MenuItem Header="Guests" Click="OpenGuestsWindow"/>
+            <MenuItem Name="Logout" Header="Logout" Click="Logout_Click" HorizontalAlignment="Right"></MenuItem>
             <!-- Add more menu items as needed -->
         </Menu>
 

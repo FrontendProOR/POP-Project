@@ -1,6 +1,7 @@
 ﻿using HotelReservations.Model;
 using HotelReservations.Service;
 using System.Windows;
+using System.Windows.Media;
 
 namespace HotelReservations.Windows
 {
@@ -56,6 +57,23 @@ namespace HotelReservations.Windows
         //    Close();
         //}
 
+        //private void SaveBtn_Click(object sender, RoutedEventArgs e)
+        //{
+        //    // Update the contextUserType.Name with the value from the TextBox
+        //    contextUserType.Name = UserTypeNameTB.Text;
+
+        //    // Check if the name is not empty before saving
+        //    if (!string.IsNullOrWhiteSpace(contextUserType.Name))
+        //    {
+        //        userTypeService.SaveUserType(contextUserType);
+        //        DialogResult = true;
+        //        Close();
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("User type name cannot be empty.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        //    }
+        //}
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
             // Update the contextUserType.Name with the value from the TextBox
@@ -70,7 +88,14 @@ namespace HotelReservations.Windows
             }
             else
             {
+                // Show an error message
                 MessageBox.Show("User type name cannot be empty.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                // Highlight the TextBox or provide visual feedback
+                UserTypeNameTB.BorderBrush = Brushes.Red; // You can customize this to your UI style
+
+                // Optionally, you can set focus to the TextBox for better user experience
+                UserTypeNameTB.Focus();
             }
         }
 
