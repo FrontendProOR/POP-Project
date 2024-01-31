@@ -44,6 +44,86 @@ namespace HotelReservations.Repository
             return rooms;
         }
 
+        public List<Room> GetAllCurrentlyActive()
+        {
+            var rooms = new List<Room>();
+            using (SqlConnection conn = new SqlConnection(Config.CONNECTION_STRING))
+            {
+                conn.Open();
+
+                var commandText = @"
+            SELECT r.*, rt.*, 
+            CASE 
+                WHEN EXISTS (
+                    SELECT 1 
+                    FROM dbo.reservation res 
+                    WHERE res.room_number = r.room_number 
+                    AND res.start_date_time <= GETDATE() 
+                    AND res.end_date_time >= GETDATE() 
+                    AND res.reservation_is_active = 1
+                ) THEN CAST(1 AS bit) 
+                ELSE CAST(0 AS bit) 
+            END AS is_room_active 
+            FROM dbo.room r
+            INNER JOIN dbo.room_type rt ON r.room_type_id = rt.room_type_id";
+
+                SqlDataAdapter adapter = new SqlDataAdapter(commandText, conn);
+                DataSet dataSet = new DataSet();
+                adapter.Fill(dataSet, "room");
+
+                foreach (DataRow row in dataSet.Tables["room"].Rows)
+                {
+                    var room = new Room()
+                    {
+                        Id = (int)row["room_id"],
+                        RoomNumber = row["room_number"] as string,
+                        HasTV = (bool)row["has_TV"],
+                        HasMiniBar = (bool)row["has_mini_bar"],
+                        IsActive = (bool)row["is_room_active"], // Set IsActive based on reservation status
+                        IsDeleted = (bool)row["is_deleted"],
+                        RoomType = new RoomType()
+                        {
+                            Id = (int)row["room_type_id"],
+                            Name = (string)row["room_type_name"],
+                            NumberOfBeds = (int)row["number_of_beds"],
+                            IsActive = (bool)row["room_type_is_active"]
+                        }
+                    };
+
+                    rooms.Add(room);
+                }
+
+                // Update room_is_active column in the room table based on current reservations
+                foreach (var room in rooms)
+                {
+                    // Assuming there is a method to update the database with the new isActive value
+                    UpdateRoomIsActive(conn, room.RoomNumber, room.IsActive);
+                }
+            }
+
+            return rooms;
+        }
+
+        private void UpdateRoomIsActive(SqlConnection conn, string roomNumber, bool isActive)
+        {
+            // Prepare the SQL update command
+            string updateCommandText = @"
+        UPDATE dbo.room
+        SET room_is_active = @IsActive
+        WHERE room_number = @RoomNumber";
+
+            using (SqlCommand command = new SqlCommand(updateCommandText, conn))
+            {
+                // Add parameters
+                command.Parameters.AddWithValue("@IsActive", isActive);
+                command.Parameters.AddWithValue("@RoomNumber", roomNumber);
+
+                // Execute the update command
+                command.ExecuteNonQuery();
+            }
+        }
+
+
         public int Insert(Room room)
         {
             using (SqlConnection conn = new SqlConnection(Config.CONNECTION_STRING))

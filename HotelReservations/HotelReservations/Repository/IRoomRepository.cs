@@ -6,6 +6,7 @@ namespace HotelReservations.Repository
     {
         Room GetRoomByRoomNumber(string roomNumber);
         List<Room> GetAll();
+        List<Room> GetAllCurrentlyActive();
         List<RoomType> GetAllRoomTypes();
         int Insert(Room room);
         void Update(Room room);

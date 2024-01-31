@@ -24,7 +24,10 @@ namespace HotelReservations.Service
         {
             return reservationRepository.GetAll();
         }
-
+        public List<Reservation> GetAllCurrentActiveReservations()
+        {
+            return reservationRepository.GetCurrentAndFutureReservations();
+        }
         public List<ReservationGuest> GetAllRGuests()
         {
             return reservationGuestRepository.GetAll();
@@ -57,13 +60,13 @@ namespace HotelReservations.Service
                 else
                 {
                     MessageBox.Show("This room is already reserved for the specified period.", "Room Unavailable", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    // Handle the situation when the room is already reserved
+                    
                 }
             }
             else
             {
                 reservationRepository.Update(reservation);
-                // Handle the situation when updating an existing reservation
+                generatedReservationId = reservation.Id;
             }
             UpdateRoomsBasedOnExpiredReservations();
 
@@ -72,7 +75,6 @@ namespace HotelReservations.Service
 
         public bool IsRoomAvailable(string roomNumber, DateTime startDateTime, DateTime endDateTime)
         {
-            // Retrieve existing reservations for the specified room
             var existingReservations = reservationRepository.GetAll().Where(r =>
                 r.RoomNumber == roomNumber &&
                 r.IsActive &&

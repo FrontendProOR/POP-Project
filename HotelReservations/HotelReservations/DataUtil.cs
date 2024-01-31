@@ -88,7 +88,7 @@ namespace HotelReservations
             try
             {
                 IRoomRepository roomRepository = new RoomRepository();
-                var loadedRooms = roomRepository.GetAll();
+                var loadedRooms = roomRepository.GetAllCurrentlyActive();
 
                 IUserRepository userRepository = new UserRepository();
                 var loadedUsers = userRepository.GetAll();
@@ -103,7 +103,7 @@ namespace HotelReservations
                 var loadedpriceList = priceRepository.GetAll();
 
                 IReservationRepository reservationRepository = new ReservationRepository();
-                var loadedReservations = reservationRepository.GetAll();
+                var loadedReservations = reservationRepository.GetCurrentAndFutureReservations();
 
                 IReservationGuestRepository reservationGuestRepository = new ReservationGuestRepository();
                 var loadedReservationGuests = reservationGuestRepository.GetAll();

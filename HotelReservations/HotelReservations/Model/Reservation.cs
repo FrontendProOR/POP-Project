@@ -23,5 +23,10 @@
             reservation.IsActive = IsActive;
             return reservation;
         }
+
+        public static implicit operator Reservation(int v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

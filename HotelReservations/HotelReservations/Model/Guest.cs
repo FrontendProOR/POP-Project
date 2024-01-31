@@ -1,4 +1,5 @@
-﻿namespace HotelReservations.Model
+﻿
+namespace HotelReservations.Model
 {
     public class Guest
     {
@@ -19,6 +20,11 @@
             clone.IsActive = IsActive;
 
             return clone;
+        }
+
+        public static implicit operator Guest(int v)
+        {
+            throw new NotImplementedException();
         }
     }
 }

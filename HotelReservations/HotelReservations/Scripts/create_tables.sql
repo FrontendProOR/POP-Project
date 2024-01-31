@@ -75,6 +75,8 @@ CREATE TABLE reservation (
 	total_price FLOAT NOT NULL,
 	reservation_is_active BIT NOT NULL,
 );
+--room_number VARCHAR(50) u reservation ne secam se koji sam dodo 
+
 CREATE TABLE guest (
 	guest_id INT IDENTITY(1,1) PRIMARY KEY,
 	guest_name VARCHAR(40) NOT NULL,

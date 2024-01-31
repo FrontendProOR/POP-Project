@@ -124,8 +124,8 @@ namespace HotelReservations.Repository
                     WHERE reservation_id=@reservation_id
                 ";
 
-                command.Parameters.Add(new SqlParameter("reservation_id", reservationGuest.ReservationId));
-                command.Parameters.Add(new SqlParameter("guest_id", reservationGuest.GuestId));
+                command.Parameters.Add(new SqlParameter("@reservation_id", reservationGuest.ReservationId.Id));
+                command.Parameters.Add(new SqlParameter("@guest_id", reservationGuest.GuestId.Id));
 
                 command.ExecuteNonQuery();
             }
@@ -164,6 +164,45 @@ namespace HotelReservations.Repository
                 return guests;
             }
         }
+
+        public ReservationGuest GetByReservationIdAndGuestId(int reservationId, int guestId)
+        {
+            using (SqlConnection conn = new SqlConnection(Config.CONNECTION_STRING))
+            {
+                conn.Open();
+
+                var commandText = @"
+            SELECT *
+            FROM dbo.[reservation_guest]
+            WHERE reservation_id = @reservationId AND guest_id = @guestId";
+
+                using (SqlCommand command = new SqlCommand(commandText, conn))
+                {
+                    command.Parameters.AddWithValue("@reservationId", reservationId);
+                    command.Parameters.AddWithValue("@guestId", guestId);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            // Create a new ReservationGuest object with the retrieved data
+                            var reservationGuest = new ReservationGuest()
+                            {
+                                ReservationId = (int)reader["reservation_id"],
+                                GuestId = (int)reader["guest_id"]
+                            };
+
+                            return reservationGuest;
+                        }
+                    }
+                }
+            }
+
+            return null; // If no matching entry is found
+        }
+
+
+
 
         public void Save(List<ReservationGuest> reservationGuests)
         {
